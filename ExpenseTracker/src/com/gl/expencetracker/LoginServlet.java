@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.gl.expensetracker.connection.DatabaseUtils;
+
 import java.sql.*;
 import java.util.ArrayList;
-
-import static com.gl.expencetracker.DatabaseUtility.*;
-
 /**
  * Servlet implementation class LoginServlet
  */
@@ -43,7 +43,8 @@ private static final long serialVersionUID = 1L;
 		String searchQuery ="select * from userdetails where username=?AND password=?";
 		
 		try {
-			dbConnection = getDBConnection();
+			DatabaseUtils db = new DatabaseUtils();
+			dbConnection = db.getConnection();
 			prepareStmt = dbConnection.prepareStatement(searchQuery);
 
 			prepareStmt.setString(1, user.getUserName());

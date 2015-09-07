@@ -27,37 +27,7 @@
 <title>HOME</title>
 </head>
 <body>
-<%!ExpenseUser curUser ; 
- %> 
-<% curUser = (ExpenseUser) session.getAttribute("user");  
- %> 
-	<p>
-		Welcome
-		<%=curUser %>
-		<br>
-		
-<TR>
-	<TH>Name</TH>
-	<TH>Id</TH>
-	<TH>Admin</TH>
-</TR>
-<c:forEach var="item" items="${sessionScope.grpList}">
+<%@include file="./Header.jsp" %>
 
- <tr>
-   <td><c:out value="${item.grpName}" /></td>
-   <td><c:out value="${item.grpId}" /></td>
-   <td><c:out value="${item.createdBy}" /></td>
- </tr>		
-</c:forEach>
-	<TABLE BORDER="1">
-                <TR>
-                    <TH>ID</TH>
-                    <TH>Name</TH>
-                </TR>
-                <TR>
-                    <TD> 1 </TD>
-                    <TD> akash </TD>
-                </TR>
-            </TABLE>
 </body>
 </html>

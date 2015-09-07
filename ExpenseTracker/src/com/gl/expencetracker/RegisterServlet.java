@@ -10,7 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static com.gl.expencetracker.DatabaseUtility.*;
+
+import com.gl.expensetracker.connection.DatabaseUtils;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -58,9 +59,11 @@ public class RegisterServlet extends HttpServlet {
 		String insertTableSQL = "INSERT INTO userdetails "+
 				"(username,emailid,phone,password) VALUES "
 				+ "(?,?,?,?)";
+		DatabaseUtils db = new DatabaseUtils();
 
 		try {
-			dbConnection = getDBConnection();
+			
+			dbConnection = db.getConnection();
 			prepareStmt = dbConnection.prepareStatement(insertTableSQL);
 
 			prepareStmt.setString(1, curUser.getUserName());
@@ -82,7 +85,7 @@ public class RegisterServlet extends HttpServlet {
 			if (prepareStmt != null) {
 				prepareStmt.close();
 			}
-			closeConnection(dbConnection);
+			db.close();
 		}
 	}
 
