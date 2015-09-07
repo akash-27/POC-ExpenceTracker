@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
 import com.gl.expensetracker.connection.DatabaseUtils;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 /**
  * Servlet implementation class LoginServlet
@@ -63,6 +65,9 @@ private static final long serialVersionUID = 1L;
     			user.seteMail(rs.getString("emailid"));
     			user.setMobNumber(rs.getString("phone"));
     			user.setUserId(rs.getInt("userid"));
+    			user.setAddress(rs.getString("address"));
+    			user.setIsValidated(rs.getBoolean("isvalidated"));
+//    			user.setCreatedOn(rs.getDate("createdon"));
     			//setting user-details in session
     			session.setAttribute("user", user);
     			
@@ -143,12 +148,13 @@ private static final long serialVersionUID = 1L;
 			grpDetail.setGrpId(rs.getInt("grpid"));
 			grpDetail.setGrpName(rs.getString("grpname"));
 			grpDetail.setCreatedBy(rs.getString("createdby"));
-//			try {
-//				grpDetail.setCreatedDate(new SimpleDateFormat().parse(rs.getString("createdate")));
-//			} catch (ParseException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			try {
+				grpDetail.setCreatedDate(new SimpleDateFormat().parse(rs.getString("createddate")));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
     	return grpDetail;
     }
