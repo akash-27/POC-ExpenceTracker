@@ -215,10 +215,10 @@ class
 							<h4 class="modal-title">Edit Group</h4>
 						</div>
 						<div class="modal-body">
-							<form class="form-manage" action="" method="">
-								<input type="text" class="form-control" placeholder="Groupname"
-									required autofocus> <input type="text"
-									class="form-control" placeholder="NewGroupname" required>
+							<form class="form-manage" action="EditGroup" method="post">
+									<%@include file="./GrpCommon.jsp" %><br>
+									New Group Name: <input type="text" name="newgrpname"
+									class="form-control" placeholder="NewGroupname" required><br>
 								<input type="submit" class="btn btn-lg btn-default btn-block"
 									value="Edit" />
 							</form>

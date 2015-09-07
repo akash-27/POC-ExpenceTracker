@@ -50,7 +50,6 @@ public class EditProf extends HttpServlet {
 		//extract userid value from session
 		Connection dbConnection = null;
 		PreparedStatement prepareStmt = null;
-		ExpenseUser user = new ExpenseUser();
 		String updatesql = "update userdetails set phone=?, emailid=?, address=? "
 				+ " where userid=?";
 
@@ -64,17 +63,13 @@ public class EditProf extends HttpServlet {
 			prepareStmt.setString(1, phone);
 			prepareStmt.setString(3, address);
 			prepareStmt.setString(2, email);
-			prepareStmt.setInt(4, 1);
+			prepareStmt.setInt(4, curruser.getUserId());
 			// execute update SQL stetement
 			prepareStmt.executeUpdate();
-			user.setCreatedOn(curruser.getCreatedOn());
-			user.setPassWord(curruser.getPassWord());
-			user.setUserId(curruser.getUserId());
-			user.setUserName(curruser.getUserName());
-			user.setAddress(address);
-			user.seteMail(email);
-			user.setMobNumber(phone);
-			session.setAttribute("user", user);
+			curruser.setAddress(address);
+			curruser.seteMail(email);
+			curruser.setMobNumber(phone);
+			session.setAttribute("user", curruser);
 			RequestDispatcher requestDispatcher; 
 			requestDispatcher = request.getRequestDispatcher("welcome.jsp");
 			requestDispatcher.forward(request, response);

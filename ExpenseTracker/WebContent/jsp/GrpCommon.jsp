@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@  taglib prefix="c" uri="http://java.sun.com/jstl/core"%>
+<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -28,7 +28,11 @@ type
 
 
 
+
+
  
+
+
 
 
 
@@ -36,11 +40,19 @@ css
 
 
 
+
+
  
 
 
 
+
+
 class
+
+
+
+
 
 
 
@@ -53,9 +65,9 @@ class
 <title>Header Page</title>
 </head>
 <body>
-	<select name="username" id="username">
+	Group Name: <select name="grpname" id="grpname" style="width:200px">
 		<c:forEach var="item" items="${sessionScope.grpList}">
-				<option value="${item.grpId}" selected="selected">${item.grpName}</option>
+			<option value="${item.grpId}" selected="selected">${item.grpName}</option>
 		</c:forEach>
 	</select>
 </body>

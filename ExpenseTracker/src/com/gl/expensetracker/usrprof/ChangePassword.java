@@ -35,7 +35,7 @@ public class ChangePassword extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	
+
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class ChangePassword extends HttpServlet {
 		String newpass = request.getParameter("newpass");
 		String confpass = request.getParameter("confpass");
 		//extract userid value from session
-		
+
 
 		Connection dbConnection = null;
 		PreparedStatement prepareStmt = null;
@@ -57,19 +57,21 @@ public class ChangePassword extends HttpServlet {
 				+ " where userid=?";
 
 		try {
+			HttpSession session = request.getSession(true);
+			user = (ExpenseUser) session.getAttribute("user");
 			DatabaseUtils db = new DatabaseUtils();
 			dbConnection = db.getConnection();
 			prepareStmt = dbConnection.prepareStatement(updatesql);
 			prepareStmt.setString(1, newpass);
-			prepareStmt.setInt(2, 1);
+			prepareStmt.setInt(2, user.getUserId());
 			// execute update SQL stetement
 			prepareStmt.executeUpdate();
-			HttpSession session = request.getSession(true);
+
 			user.setPassWord(newpass);
 			session.setAttribute("user", user);
 			requestDispatcher = request.getRequestDispatcher("welcome.jsp");
 			requestDispatcher.forward(request, response);
-			
+
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
