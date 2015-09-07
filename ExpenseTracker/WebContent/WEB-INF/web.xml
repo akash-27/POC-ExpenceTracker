@@ -34,7 +34,7 @@
     <servlet-name>LoginFailure</servlet-name>
     <url-pattern>/jsp/LoginFailure</url-pattern>
   </servlet-mapping>
-   <listener>
+  <listener>
     <listener-class>com.gl.expensetracker.connection.BootLoader</listener-class>
   </listener>
 </web-app>
