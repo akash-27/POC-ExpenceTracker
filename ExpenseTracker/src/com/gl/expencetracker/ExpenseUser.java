@@ -1,16 +1,15 @@
 package com.gl.expencetracker;
 
 import java.util.Date;
-import java.text.SimpleDateFormat;
-
 import javax.servlet.http.HttpServletRequest;
 
 public class ExpenseUser {
 	private String userName, passWord, eMail;
 	private String mobNumber;
 	private int userId;
-	private String createdOn;
+	private Date createdOn;
 	private String address;
+	private boolean isValidated;
 	
 	public boolean compareUser(String name, String pswd)
 	{
@@ -34,7 +33,8 @@ public class ExpenseUser {
 		this.passWord = request.getParameter("password");
 		this.eMail = request.getParameter("email");
 		this.mobNumber = request.getParameter("mobno");
-		this.createdOn = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+		this.createdOn = new Date();
+		this.isValidated = false;
 	}
 	
 	public void extractUserIdfromRequest(HttpServletRequest request)
@@ -83,11 +83,11 @@ public class ExpenseUser {
 		this.userId = userId;
 	}
 
-	public String getCreatedOn() {
+	public Date getCreatedOn() {
 		return createdOn;
 	}
 
-	public void setCreatedOn(String createdOn) {
+	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
 
@@ -97,5 +97,13 @@ public class ExpenseUser {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public boolean getIsValidated() {
+		return isValidated;
+	}
+
+	public void setIsValidated(boolean isValidated) {
+		this.isValidated = isValidated;
 	}
 }

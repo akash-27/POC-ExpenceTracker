@@ -88,10 +88,10 @@
             <div class="account-wall">
                 <div id="my-tab-content" class="tab-content">
 						<div class="tab-pane active" id="login">
-               		    <img class="profile-img" src="../resources/Logo134.jpg" alt="">
+               		    <img class="img-thumbnail center-block" src="../resources/front-page-logo.jpg" alt="">
                			<form class="form-signin" id="loginForm" action="LoginServlet" method="post">
-               				<input type="text" name="user" class="form-control" placeholder="Username" required autofocus>
-               				<input type="password" name="password" class="form-control" placeholder="Password" required>
+               				User Name:<input type="text" name="user" class="form-control" placeholder="Username" required autofocus>
+               				Password:<input type="password" name="password" class="form-control" placeholder="Password" required>
                				<input type="submit" class="btn btn-lg btn-default btn-block" value="Sign In" />
                			</form>
                			<div id="tabs" data-tabs="tabs">
@@ -99,15 +99,16 @@
               				</div>
 						</div>
 						<div class="tab-pane" id="register">
+						<img class="img-thumbnail center-block" src="../resources/logoExpenseTracker.png" alt="">
 							<form class="form-signin" id="regsterForm" action="RegisterServlet" method="post">
-								<input type="text" name="user" class="form-control" placeholder="User Name ..." required autofocus>
-								<input type="email" id="emailid" name="email" class="form-control" placeholder="Emaill Address ..." 
+								User Name:<input type="text" name="user" class="form-control" placeholder="User Name ..." required autofocus>
+								Email ID:<input type="email" id="emailid" name="email" class="form-control" placeholder="Emaill Address ..." 
 								onblur="return validateEmail();" required>
-								<input type="password" id="p1" name="password" class="form-control" placeholder="Password min 8 letters..." 
+								Password:<input type="password" id="p1" name="password" class="form-control" placeholder="Password min 8 letters..." 
 								onblur ="return checkPasswordLength();"  required>
-								<input type="password" id="p2" name="repassword" class="form-control" placeholder="Confirm Password ..."
+								Confirm Password:<input type="password" id="p2" name="repassword" class="form-control" placeholder="Confirm Password ..."
 								 onblur="return checkPasswordMatch();" required>
-								<input type="text" id="phone" name="mobno" class="form-control" placeholder="Mobile No starting with 7,8 or 9..." maxlength="10" 
+								Phone Number:<input type="text" id="phone" name="mobno" class="form-control" placeholder="Mobile No starting with 7,8 or 9..." maxlength="10" 
 								onblur="return checkPhoneLength();" required>
 								<input type="submit" class="btn btn-lg btn-default btn-block" value="Sign Up" onclick="return validateForm();" />
 							</form>
