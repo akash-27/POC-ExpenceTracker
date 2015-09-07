@@ -35,16 +35,7 @@ public class ChangePassword extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String oldpass = request.getParameter("oldpass");
-		HttpSession session = request.getSession(true);
-		ExpenseUser curruser = new ExpenseUser();
-		curruser = (ExpenseUser) session.getAttribute("user");
-		if(!(oldpass.equals(curruser.getPassWord()))){
-			String Msg = "Old Password is Mismatched ";
-
-			response.setContentType("text/plain");
-			response.getWriter().write(Msg);
-		}
+	
 	}
 
 	/**
@@ -60,6 +51,8 @@ public class ChangePassword extends HttpServlet {
 
 		Connection dbConnection = null;
 		PreparedStatement prepareStmt = null;
+		RequestDispatcher requestDispatcher; 
+		ExpenseUser user = new ExpenseUser();
 		String updatesql = "update userdetails set password=? "
 				+ " where userid=?";
 
@@ -67,20 +60,20 @@ public class ChangePassword extends HttpServlet {
 			DatabaseUtils db = new DatabaseUtils();
 			dbConnection = db.getConnection();
 			prepareStmt = dbConnection.prepareStatement(updatesql);
-
 			prepareStmt.setString(1, newpass);
 			prepareStmt.setInt(2, 1);
 			// execute update SQL stetement
 			prepareStmt.executeUpdate();
-			RequestDispatcher requestDispatcher; 
-			request.setAttribute("msg", "Password Successfully update");
-			requestDispatcher = request.getRequestDispatcher("./Welcome.jsp");
+			HttpSession session = request.getSession(true);
+			user.setPassWord(newpass);
+			session.setAttribute("user", user);
+			requestDispatcher = request.getRequestDispatcher("welcome.jsp");
 			requestDispatcher.forward(request, response);
+			
 
 		} catch (SQLException e) {
-			request.setAttribute("msg", "Error occured while updating Password");
 			System.out.println(e.getMessage());
-
+			response.sendRedirect("Error.jsp");
 		} finally {
 
 			if (prepareStmt != null) {

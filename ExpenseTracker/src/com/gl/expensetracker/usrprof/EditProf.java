@@ -50,10 +50,9 @@ public class EditProf extends HttpServlet {
 		//extract userid value from session
 		Connection dbConnection = null;
 		PreparedStatement prepareStmt = null;
+		ExpenseUser user = new ExpenseUser();
 		String updatesql = "update userdetails set phone=?, emailid=?, address=? "
 				+ " where userid=?";
-
-
 
 		try {
 			HttpSession session = request.getSession(true);
@@ -62,34 +61,26 @@ public class EditProf extends HttpServlet {
 			prepareStmt = dbConnection.prepareStatement(updatesql);
 			ExpenseUser curruser = new ExpenseUser();
 			curruser = (ExpenseUser) session.getAttribute("user");
-			if(!(phone.equals(curruser.getMobNumber()))){
-				prepareStmt.setString(1, phone);
-			}
-			else{
-				prepareStmt.setString(1, curruser.getMobNumber());
-			}
-			if(!(address.equals(curruser.getAddress()))){
-				prepareStmt.setString(3, address);
-			}
-			else{
-				prepareStmt.setString(3, curruser.getAddress());
-			}
-			if(!(email.equals(curruser.geteMail()))){
-				prepareStmt.setString(2, email);
-			}
-			else{
-				prepareStmt.setString(2, curruser.geteMail());
-			}
+			prepareStmt.setString(1, phone);
+			prepareStmt.setString(3, address);
+			prepareStmt.setString(2, email);
 			prepareStmt.setInt(4, 1);
 			// execute update SQL stetement
 			prepareStmt.executeUpdate();
-			request.setAttribute("msg", "Profile Successfully update");
+			user.setCreatedOn(curruser.getCreatedOn());
+			user.setPassWord(curruser.getPassWord());
+			user.setUserId(curruser.getUserId());
+			user.setUserName(curruser.getUserName());
+			user.setAddress(address);
+			user.seteMail(email);
+			user.setMobNumber(phone);
+			session.setAttribute("user", user);
 			RequestDispatcher requestDispatcher; 
-			requestDispatcher = request.getRequestDispatcher("/Welcome.jsp");
+			requestDispatcher = request.getRequestDispatcher("welcome.jsp");
 			requestDispatcher.forward(request, response);
 
 		} catch (SQLException e) {
-			request.setAttribute("msg", "Error occured while updating profile");
+			response.sendRedirect("Error.jsp");
 			System.out.println(e.getMessage());
 
 		} finally {

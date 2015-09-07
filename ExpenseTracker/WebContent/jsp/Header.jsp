@@ -13,6 +13,7 @@
 <!-- jQuery library -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <!-- Latest compiled JavaScript -->
 <script
@@ -39,8 +40,9 @@
 </script>
 <script type="text/javascript">
 	function validpass() {
-		var pass1 = document.getElementById("pass1").value;
-		var pass2 = document.getElementById("pass2").value;
+		var pass1 = document.getElementById("pass1");
+		var pass2 = document.getElementById("pass2");
+		var p3 = document.getElementById("oldpass");
 		var ok = true;
 		if (pass1.value == null || pass2.value == null) {
 			alert('can not be null');
@@ -51,7 +53,11 @@
 			document.getElementById('pass1').focus();
 			return false;
 		}
-		if (pass1 != pass2) {
+		if(p3.value == pass1.value){
+			alert("Old Password and New Password is Same!!!");
+			ok = false;
+		}
+		if (pass1.value != pass2.value) {
 			document.getElementById("pass1").style.borderColor = "#E34234";
 			document.getElementById("pass2").style.borderColor = "#E34234";
 			alert("Passwords Does Not Match!!!");
@@ -77,6 +83,27 @@
 			document.getElementById('phone').focus();
 			return false;
 		}
+	}
+	function PasswordValidate(){
+		var password=document.getElementById("oldpass").value
+		$.ajax({
+			url : 'VerifyOldPass',
+            type : 'GET',
+            dataType : 'text',
+            data : {oldpass : password},
+            success : function(data) {
+                if(data != "SUCCESS"){
+                   alert("Old Password Mismatch");
+                   $("#pass").hide();
+                   return false;
+                }else if (data == "SUCCESS"){
+                	$("#pass").show();
+                   return true;               
+                }   
+          
+		}
+		});
+		return false;
 	}
 </script>
 
@@ -238,13 +265,14 @@ class
 										<h4 class="modal-title">Edit User Profile</h4>
 									</div>
 									<div class="modal-body">
-										<form class="form-manage" action="jsp/EditProf" method="post">
+										<form class="form-manage" action="EditProf" method="post">
 										<%!ExpenseUser curUser ;%>
-										<% curUser = (ExpenseUser) session.getAttribute("user");%>
-											<input type="text" class="form-control" name="username" placeholder="Username" value='<%=curUser.getUserName()%>' disabled="disabled" required > 
-											<input type="text" class="form-control" name="phone" id="phone" placeholder="phone" value='<%=curUser.getMobNumber()%>' onblur="validatePhone()"> 
-											<input type="text" class="form-control" name="address" placeholder="Address" value='<%=curUser.getAddress()%>'>
-											<input type="text" class="form-control" name="email" id="email" placeholder="emailid" value='<%=curUser.geteMail()%>' onblur="validateEmail()">
+										<% curUser = (ExpenseUser) session.getAttribute("user");
+										%>
+											User Name: <input type="text" class="form-control" name="username" placeholder="Username" value='<%=curUser.getUserName()%>' disabled="disabled" required > <br>
+											Mobile Number: <input type="text" class="form-control" name="phone" id="phone" placeholder="phone" value='<%=curUser.getMobNumber()%>' onblur="validatePhone()"> <br>
+											Address: <input type="text" class="form-control" name="address" placeholder="Address" value='<%=curUser.getAddress()%>'><br>
+											Email id:<input type="text" class="form-control" name="email" id="email" placeholder="emailid" value='<%=curUser.geteMail()%>' onblur="validateEmail()"><br>
 
 											<input type="submit" class="btn btn-lg btn-default btn-block" value="submit" />
 										</form>
@@ -267,13 +295,13 @@ class
 						</div>
 						<div class="modal-body">
 							<form class="form-manage" action="ChangePassword" method="post">
-								<input type="password" class="form-control"
-									placeholder="Old Password" name="oldpass" required>
-								 <input	type="password" class="form-control" id="pass1" name="newpass"
-									placeholder="New Password" required>
-									 <input	type="password" class="form-control" id="pass2" name="confpass"
-									placeholder="Confirm Password" required>
-									 <input	type="submit" class="btn btn-lg btn-default btn-block"
+								Old Password: <input type="password" class="form-control"
+									placeholder="Old Password" name="oldpass" id="oldpass" onblur="return PasswordValidate()" required><br>
+								 New Password: <input	type="password" class="form-control" id="pass1" name="newpass"
+									placeholder="New Password" required><br>
+									 Confirm Password: <input	type="password" class="form-control" id="pass2" name="confpass"
+									placeholder="Confirm Password" required><br>
+									 <input	type="submit" id="pass" class="btn btn-lg btn-default btn-block"
 									value="submit" onclick="return validpass()">
 							</form>
 						</div>

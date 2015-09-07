@@ -22,7 +22,7 @@ public class DatabaseUtils {
 
 	public Connection getConnection() {
 		try {
-			connection = DriverManager.getConnection(ApplicationUtilities.getCustomProperty("mysql.connectionUrl",null), ApplicationUtilities.getCustomProperty("mysql.userName", "root"), ApplicationUtilities.getCustomProperty("mysql.password", "India@123"));
+			connection = DriverManager.getConnection(ApplicationUtilities.getCustomProperty("mysql.connectionUrl",null), ApplicationUtilities.getCustomProperty("mysql.userName", "root"), ApplicationUtilities.getCustomProperty("mysql.password", null));
 			return connection;
 		} catch (Exception e) {
 			e.printStackTrace();
