@@ -18,6 +18,26 @@
 
 <script type="text/javascript">
  //write here java script coding.
+  //function to check if username exists in db
+ 
+ function checkname() {
+		var name1 = document.getElementById("username").value
+
+		$.get("UsernameValidation", {
+			"username" : name1
+		}, function(resultFromServer) {
+
+			if (resultFromServer == "true") {
+				$("#Register").hide();
+				$(".largefont").text("user name already exists ");
+			} else {
+				$("#Register").show();
+				$(".largefont").text(" ");
+			}
+		});
+
+	}
+//Next function
  
  function checkPasswordLength()
  {
@@ -71,17 +91,34 @@
 // 			alert ('form invalid');
 // 			return false;
 		}		
-	}
+	
 </script>
 
 <style type="text/css">
 //type css class. 
 
 </style>
+
+
+<style type="text/css">
+.largefont { 
+ 
+  color: #ff0000; 
+  font-family:arial; 
+  font-size: 15px; 
+  display: block;
+  text-align:center;
+}
+
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
+<a>
+<span class="largefont"></span>
+</a>
+
 <div class="container">
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">
@@ -101,7 +138,7 @@
 						<div class="tab-pane" id="register">
 						<img class="img-thumbnail center-block" src="../resources/logoExpenseTracker.png" alt="">
 							<form class="form-signin" id="regsterForm" action="RegisterServlet" method="post">
-								User Name:<input type="text" name="user" class="form-control" placeholder="User Name ..." required autofocus>
+								User Name:<input type="text" name="user" class="form-control" id="username"  onkeyup="checkname();" required autofocus>
 								Email ID:<input type="email" id="emailid" name="email" class="form-control" placeholder="Emaill Address ..." 
 								onblur="return validateEmail();" required>
 								Password:<input type="password" id="p1" name="password" class="form-control" placeholder="Password min 8 letters..." 
@@ -110,7 +147,7 @@
 								 onblur="return checkPasswordMatch();" required>
 								Phone Number:<input type="text" id="phone" name="mobno" class="form-control" placeholder="Mobile No starting with 7,8 or 9..." maxlength="10" 
 								onblur="return checkPhoneLength();" required>
-								<input type="submit" class="btn btn-lg btn-default btn-block" value="Sign Up" onclick="return validateForm();" />
+								<input type="submit" class="btn btn-lg btn-default btn-block" value="Sign Up" id="Register"  onclick="return validateForm();" />
 							</form>
 							<div id="tabs" data-tabs="tabs">
                			<p class="text-center"><a href="#login" data-toggle="tab">Have an Account?</a></p>
