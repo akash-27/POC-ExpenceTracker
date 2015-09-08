@@ -35,7 +35,6 @@ private static final long serialVersionUID = 1L;
 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	// TODO Auto-generated method stub
-    	response.getWriter().append("Welcome to expence tracker");
     	ExpenseUser user = new ExpenseUser();
     	user.extractUserIdfromRequest(request);
     	ArrayList<ExpenseGroups> grpList;
@@ -127,7 +126,6 @@ private static final long serialVersionUID = 1L;
 		while( rs.next()) {
 			ExpenseGroups grpDetail ;
 			int grpId = rs.getInt("grpid");
-//			System.out.println("groupid :" + grpId);
 			grpDetail = getGroupfromDB(con,grpId);			
 			grpList.add(grpDetail);
 		}    	
@@ -140,7 +138,6 @@ private static final long serialVersionUID = 1L;
     	String searchQuery ="select * from groupdetails where grpid=?";
     	PreparedStatement prepareStmt = null;
     	prepareStmt = con.prepareStatement(searchQuery);
-
 		prepareStmt.setInt(1, grpId);
     	ResultSet rs = prepareStmt.executeQuery();
 		while( rs.next()) {
@@ -148,14 +145,32 @@ private static final long serialVersionUID = 1L;
 			grpDetail.setGrpId(rs.getInt("grpid"));
 			grpDetail.setGrpName(rs.getString("grpname"));
 			grpDetail.setCreatedBy(rs.getString("createdby"));
-			try {
-				grpDetail.setCreatedDate(new SimpleDateFormat().parse(rs.getString("createddate")));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			grpDetail.setNumber(getCountofGroup(con,grpDetail.getGrpId()));
+			
+			//TODO : handling of created date
+//			try {
+//				grpDetail.setCreatedDate(new SimpleDateFormat().parse(rs.getString("createddate")));
+//			} catch (ParseException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 
 		}
     	return grpDetail;
+    }
+    public int getCountofGroup(Connection con, int grpId) throws SQLException 
+    {
+    	String countQuery = "select count(*) AS total from usrgrpmap where grpid=?";
+    	PreparedStatement prepareStmt = null;
+    	prepareStmt = con.prepareStatement(countQuery);
+    	prepareStmt.setInt(1, grpId);
+    	
+    	System.out.println(prepareStmt);
+    	ResultSet rs = prepareStmt.executeQuery(); 
+    	if(rs.next()){
+    		System.out.println(rs.getInt("total"));
+    		return rs.getInt("total");
+        }  
+		return 0;   
     }
 }

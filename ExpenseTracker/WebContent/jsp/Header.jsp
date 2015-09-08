@@ -322,10 +322,7 @@ class
 									</div>
 									<div class="modal-body">
 										<form class="form-manage" action="AddExpense" method="post">
-											Entity name: <input type="text" class="form-control" name="entityname" placeholder="Expense Entity" required/>
-											Group Id:	 <input type="text" class="form-control" name="grpid" placeholder="Group Name" required"/>
-											User Id:	 <input type="text" class="form-control" name="usrid" placeholder="Author" required"/>
-											Amount:		 <input type="text" class="form-control" name="amount" placeholder="Price" required"/>
+											Select Group: <input type="text" class="form-control" name="grpName" placeholder="Expense Entity" required/>
 											<input type="submit" class="btn btn-lg btn-default btn-block" value="submit" />
 										</form>
 									</div>

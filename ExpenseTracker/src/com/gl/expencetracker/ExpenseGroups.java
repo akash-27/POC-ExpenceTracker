@@ -7,6 +7,7 @@ public class ExpenseGroups {
 	private int grpId;
 	private String grpName, createdBy;
 	private Date createdDate;
+	private int number;
 	
 	public int getGrpId() {
 		return grpId;
@@ -37,5 +38,11 @@ public class ExpenseGroups {
 		return "ExpenseGroups [grpId=" + grpId + ", grpName=" + grpName
 				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
 				+ "]";
+	}
+	public int getNumber() {
+		return number;
+	}
+	public void setNumber(int number) {
+		this.number = number;
 	}	
 }
