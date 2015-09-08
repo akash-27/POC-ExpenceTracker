@@ -45,8 +45,7 @@ private static final long serialVersionUID = 1L;
 		String searchQuery ="select * from userdetails where username=?AND password=?";
 		
 		try {
-			DatabaseUtils db = new DatabaseUtils();
-			dbConnection = db.getConnection();
+			dbConnection =DatabaseUtils.getInstance().getConnection();
 			prepareStmt = dbConnection.prepareStatement(searchQuery);
 
 			prepareStmt.setString(1, user.getUserName());

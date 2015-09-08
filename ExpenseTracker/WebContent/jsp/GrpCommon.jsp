@@ -65,7 +65,7 @@ class
 <title>Header Page</title>
 </head>
 <body>
-	Group Name: <select name="grpname" id="grpname" style="width:200px">
+	Group Name: <select class="form-control" style="200px" name="grpname" id="grpname" style="width:200px">
 		<c:forEach var="item" items="${sessionScope.grpList}">
 			<option value="${item.grpId}" selected="selected">${item.grpName}</option>
 		</c:forEach>

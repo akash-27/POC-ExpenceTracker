@@ -25,14 +25,14 @@ import com.gl.expensetracker.connection.DatabaseUtils;
 @WebServlet("/jsp/EditGroup")
 public class EditGroup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EditGroup() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public EditGroup() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -51,16 +51,15 @@ public class EditGroup extends HttpServlet {
 		String newgrpname = request.getParameter("newgrpname");
 		Connection dbConnection = null;
 		PreparedStatement prepareStmt = null;
-		ArrayList<ExpenseGroups> grpList = new ArrayList<ExpenseGroups>();
+		ArrayList<ExpenseGroups> grpList;
 		ArrayList<ExpenseGroups> grpList1 = new ArrayList<ExpenseGroups>();
 		RequestDispatcher requestDispatcher;
 		String updatesql = "update groupdetails set grpname=?"
 				+ " where grpid=?";
-		
+
 		try {
 			HttpSession session = request.getSession(true);
-			DatabaseUtils db = new DatabaseUtils();
-			dbConnection = db.getConnection();
+			dbConnection = DatabaseUtils.getInstance().getConnection();
 			prepareStmt = dbConnection.prepareStatement(updatesql);
 			prepareStmt.setString(1, newgrpname);
 			int grpid = Integer.parseInt(selectedItem);
@@ -70,17 +69,16 @@ public class EditGroup extends HttpServlet {
 			grpList = (ArrayList<ExpenseGroups>)session.getAttribute("grpList");
 			for (ExpenseGroups grp: grpList) {
 				ExpenseGroups grpusr = new ExpenseGroups();
-			    System.out.println(grp.getGrpName());
-			    if(grp.getGrpId() == grpid){
-			    	grpusr.setGrpName(newgrpname);
-			    }
-			    else{
-			    	grpusr.setGrpName(grp.getGrpName());
-			    }
-			    grpusr.setCreatedBy(grp.getCreatedBy());
-			    grpusr.setCreatedDate(grp.getCreatedDate());
-			    grpusr.setGrpId(grp.getGrpId());
-			    grpList1.add(grpusr);
+				if(grp.getGrpId() == grpid){
+					grpusr.setGrpName(newgrpname);
+				}
+				else{
+					grpusr.setGrpName(grp.getGrpName());
+				}
+				grpusr.setCreatedBy(grp.getCreatedBy());
+				grpusr.setCreatedDate(grp.getCreatedDate());
+				grpusr.setGrpId(grp.getGrpId());
+				grpList1.add(grpusr);
 			} 
 			session.setAttribute("grpList", grpList1);
 			requestDispatcher = request.getRequestDispatcher("welcome.jsp");
@@ -105,6 +103,6 @@ public class EditGroup extends HttpServlet {
 
 		}
 	}
-	}
+}
 
 

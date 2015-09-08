@@ -58,8 +58,8 @@ public class ChangePassword extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(true);
 			user = (ExpenseUser) session.getAttribute("user");
-			DatabaseUtils db = new DatabaseUtils();
-			dbConnection = db.getConnection();
+			
+			dbConnection = DatabaseUtils.getInstance().getConnection();
 			prepareStmt = dbConnection.prepareStatement(updatesql);
 			prepareStmt.setString(1, newpass);
 			prepareStmt.setInt(2, user.getUserId());

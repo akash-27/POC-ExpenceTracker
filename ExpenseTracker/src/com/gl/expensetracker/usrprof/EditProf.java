@@ -55,8 +55,7 @@ public class EditProf extends HttpServlet {
 
 		try {
 			HttpSession session = request.getSession(true);
-			DatabaseUtils db = new  DatabaseUtils();
-			dbConnection = db.getConnection();
+			dbConnection = DatabaseUtils.getInstance().getConnection();
 			prepareStmt = dbConnection.prepareStatement(updatesql);
 			ExpenseUser curruser = new ExpenseUser();
 			curruser = (ExpenseUser) session.getAttribute("user");
