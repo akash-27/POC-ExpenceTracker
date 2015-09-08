@@ -2,6 +2,7 @@ package com.gl.expencetracker;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 
@@ -69,6 +70,7 @@ public class RegisterServlet extends HttpServlet {
 			prepareStmt.setString(2, curUser.geteMail());
 			prepareStmt.setString(3, curUser.getMobNumber());
 			prepareStmt.setString(4, curUser.getPassWord());
+			prepareStmt.setDate(5,  new Date(0));
 
 			// execute insert SQL stetement
 			prepareStmt.executeUpdate();
