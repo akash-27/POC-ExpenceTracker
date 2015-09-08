@@ -58,13 +58,12 @@ public class RegisterServlet extends HttpServlet {
 		Connection dbConnection = null;
 		PreparedStatement prepareStmt = null;
 		String insertTableSQL = "INSERT INTO userdetails "+
-				"(username,emailid,phone,password,createddate) VALUES "
-				+ "(?,?,?,?,?)";
-		DatabaseUtils db = new DatabaseUtils();
+				"(username,emailid,phone,password) VALUES "
+				+ "(?,?,?,?)";
 
 		try {
 			
-			dbConnection = db.getConnection();
+			dbConnection = DatabaseUtils.getInstance().getConnection();
 			prepareStmt = dbConnection.prepareStatement(insertTableSQL);
 
 			prepareStmt.setString(1, curUser.getUserName());
@@ -86,8 +85,9 @@ public class RegisterServlet extends HttpServlet {
 
 			if (prepareStmt != null) {
 				prepareStmt.close();
+				dbConnection.close();
 			}
-			db.close();
+			
 		}
 	}
 

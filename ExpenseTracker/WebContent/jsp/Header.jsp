@@ -176,7 +176,7 @@ class
 										Password</a></li>
 							</ul></li>
 						<li><a href="#" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#addexpense">Add Expenses</a></li>
-						<li><a href="#" class="btn btn-primary btn-lg "> Logout</a></li>
+						<li><a href="Logout" class="btn btn-primary btn-lg "> Logout</a></li>
 					</ul>
 			</div>
 
@@ -190,12 +190,11 @@ class
 							<h4 class="modal-title">Create Group</h4>
 						</div>
 						<div class="modal-body">
-							<form class="form-manage" action="" method="">
-								<input type="text" class="form-control" placeholder="Groupname"
-									required autofocus> <input type="text"
-									class="form-control" placeholder="Createdby" required>
-								<input type="submit" class="btn btn-lg btn-default btn-block"
-									value="Create" />
+							<form class="form-manage" action="CreateGroup" method="post">
+								Group Name: <input type="text" class="form-control" placeholder="Groupname" name="grp" required autofocus> 
+<!-- 								Created By:	<input type="text" -->
+<!-- 									class="form-control" name="usr" placeholder="Createdby" required> -->
+								<input type="submit" class="btn btn-lg btn-default btn-block" value="Create" />
 							</form>
 						</div>
 						<div class="modal-footer">
@@ -215,12 +214,10 @@ class
 							<h4 class="modal-title">Edit Group</h4>
 						</div>
 						<div class="modal-body">
-							<form class="form-manage" action="" method="">
-								<input type="text" class="form-control" placeholder="Groupname"
-									required autofocus> <input type="text"
-									class="form-control" placeholder="NewGroupname" required>
-								<input type="submit" class="btn btn-lg btn-default btn-block"
-									value="Edit" />
+							<form class="form-manage" action="EditGroup" method="post">
+									<%@include file="./GrpCommon.jsp" %><br>
+									New Group Name: <input type="text" name="newgrpname" class="form-control" placeholder="NewGroupname" required><br>
+								   <input type="submit" class="btn btn-lg btn-default btn-block" value="Edit" />
 							</form>
 						</div>
 						<div class="modal-footer">
@@ -295,14 +292,10 @@ class
 						</div>
 						<div class="modal-body">
 							<form class="form-manage" action="ChangePassword" method="post">
-								Old Password: <input type="password" class="form-control"
-									placeholder="Old Password" name="oldpass" id="oldpass" onblur="return PasswordValidate()" required><br>
-								 New Password: <input	type="password" class="form-control" id="pass1" name="newpass"
-									placeholder="New Password" required><br>
-									 Confirm Password: <input	type="password" class="form-control" id="pass2" name="confpass"
-									placeholder="Confirm Password" required><br>
-									 <input	type="submit" id="pass" class="btn btn-lg btn-default btn-block"
-									value="submit" onclick="return validpass()">
+								 Old Password: <input type="password" class="form-control" placeholder="Old Password" name="oldpass" id="oldpass" onblur="return PasswordValidate()" required><br>
+								 New Password: <input	type="password" class="form-control" id="pass1" name="newpass" placeholder="New Password" required><br>
+								 Confirm Password: <input	type="password" class="form-control" id="pass2" name="confpass"	placeholder="Confirm Password" required><br>
+								 <input	type="submit" id="pass" class="btn btn-lg btn-default btn-block" value="submit" onclick="return validpass()">
 							</form>
 						</div>
 						<div class="modal-footer">

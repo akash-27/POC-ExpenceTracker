@@ -7,8 +7,9 @@ import java.sql.DriverManager;
 public class DatabaseUtils {
 
 	Connection connection;
+	private static DatabaseUtils databaseUtils=new DatabaseUtils();
 
-	public DatabaseUtils() {
+	private DatabaseUtils() {
 
 		try {
 			Class.forName(ApplicationUtilities.getCustomProperty("mysql.driverClass", "com.mysql.jdbc.Driver"));
@@ -20,6 +21,11 @@ public class DatabaseUtils {
 		}
 	}
 
+	
+	public static DatabaseUtils getInstance(){
+		return databaseUtils;
+		
+	}
 	public Connection getConnection() {
 		try {
 			connection = DriverManager.getConnection(ApplicationUtilities.getCustomProperty("mysql.connectionUrl",null), ApplicationUtilities.getCustomProperty("mysql.userName", "root"), ApplicationUtilities.getCustomProperty("mysql.password", null));

@@ -1,9 +1,10 @@
-package com.gl.expensetracker.usrprof;
+package com.gl.expensetracker.managegroup;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,20 +14,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.gl.expencetracker.ExpenseGroups;
 import com.gl.expencetracker.ExpenseUser;
+import com.gl.expencetracker.LoginServlet;
 import com.gl.expensetracker.connection.DatabaseUtils;
 
 /**
- * Servlet implementation class EditProf
+ * Servlet implementation class CreateGroup
  */
-@WebServlet("/jsp/EditProf")
-public class EditProf extends HttpServlet {
+@WebServlet("/jsp/CreateGroup")
+public class CreateGroup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public EditProf() {
+	public CreateGroup() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -43,40 +46,44 @@ public class EditProf extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String username = request.getParameter("username");
-		String phone = request.getParameter("phone");
-		String address = request.getParameter("address");
-		String email = request.getParameter("email");
-		//extract userid value from session
+		String grpname = request.getParameter("grp");
+//		String usrname = request.getParameter("usr");
+		insertGroupDetails(request, response, grpname);
+	}
+
+	private void insertGroupDetails(HttpServletRequest request,
+			HttpServletResponse response, String grpname)
+			throws ServletException, IOException {
 		Connection dbConnection = null;
 		PreparedStatement prepareStmt = null;
-		String updatesql = "update userdetails set phone=?, emailid=?, address=? "
-				+ " where userid=?";
-
+		RequestDispatcher requestDispatcher; 
+		ExpenseUser user;
+		ArrayList<ExpenseGroups> grpList;
+		LoginServlet logser = new LoginServlet();
+		String insertsql = "insert into groupdetails (grpname,createdby,createddate) values (?,?,?)";
+		
 		try {
 			HttpSession session = request.getSession(true);
+			user = (ExpenseUser) session.getAttribute("user");
+			
 			dbConnection = DatabaseUtils.getInstance().getConnection();
-			prepareStmt = dbConnection.prepareStatement(updatesql);
-			ExpenseUser curruser = new ExpenseUser();
-			curruser = (ExpenseUser) session.getAttribute("user");
-			prepareStmt.setString(1, phone);
-			prepareStmt.setString(3, address);
-			prepareStmt.setString(2, email);
-			prepareStmt.setInt(4, curruser.getUserId());
+			prepareStmt = dbConnection.prepareStatement(insertsql);
+			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+			prepareStmt.setTimestamp(3, date);
+			prepareStmt.setString(1, grpname);
+			prepareStmt.setInt(2, user.getUserId());
 			// execute update SQL stetement
 			prepareStmt.executeUpdate();
-			curruser.setAddress(address);
-			curruser.seteMail(email);
-			curruser.setMobNumber(phone);
-			session.setAttribute("user", curruser);
-			RequestDispatcher requestDispatcher; 
+
+			grpList = logser.getGroupListfromDB(dbConnection, user.getUserId());   
+			session.setAttribute("grpList", grpList);
 			requestDispatcher = request.getRequestDispatcher("welcome.jsp");
 			requestDispatcher.forward(request, response);
 
-		} catch (SQLException e) {
-			response.sendRedirect("Error.jsp");
-			System.out.println(e.getMessage());
 
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			response.sendRedirect("Error.jsp");
 		} finally {
 
 			if (prepareStmt != null) {
