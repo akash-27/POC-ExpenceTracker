@@ -1,6 +1,5 @@
 package com.gl.expencetracker;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -11,7 +10,7 @@ public class ExpenseEntity {
 	private String expenseName;
 	private int grpId, expenseId, userId;
 	private float amount;
-	private Date createdDate;
+	private String createdDate;
 	
 	public String getExpenseName() {
 		return expenseName;
@@ -43,26 +42,19 @@ public class ExpenseEntity {
 	public void setAmount(float amount) {
 		this.amount = amount;
 	}
-	public Date getCreatedDate() {
+	public String getCreatedDate() {
 		return createdDate;
 	}
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}	
 	
 	public void createExpenseEntityfromRequest(HttpServletRequest request) 
 	{
-		this.expenseId = Integer.parseInt(request.getParameter("expenseid"));
 		this.expenseName = request.getParameter("expensename");
 		this.grpId = Integer.parseInt(request.getParameter("grpid"));
 		this.userId = Integer.parseInt(request.getParameter("usrid"));
-		this.amount = Float.parseFloat(request.getParameter("mobno"));
-		try {
-			this.createdDate = new SimpleDateFormat("mm/dd/yyyy").parse((request.getParameter("createdate")));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.amount = Float.parseFloat(request.getParameter("amount"));
+		this.createdDate = new SimpleDateFormat("mm/dd/yyyy").format(new Date());
 	}
-
 }

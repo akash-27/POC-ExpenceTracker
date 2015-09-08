@@ -28,6 +28,7 @@
 </head>
 <body>
 <%@include file="./Header.jsp" %>
+<%@include file ="./DisplayGroup.jsp" %>
 
 </body>
 </html>
