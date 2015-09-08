@@ -175,8 +175,8 @@ class
 								<li><a href="#" data-toggle="modal" data-target="#changpwd">Change
 										Password</a></li>
 							</ul></li>
-						<li><a href="#">Add Expenses</a></li>
-						<li><a href="Logout">Logout</a></li>
+						<li><a href="#" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#addexpense">Add Expenses</a></li>
+						<li><a href="#" class="btn btn-primary btn-lg "> Logout</a></li>
 					</ul>
 			</div>
 
@@ -313,6 +313,31 @@ class
 					</div>
 				</div>
 			</div>
+			
+			<div class="modal fade" id="addexpense" role="dialog">
+							<div class="modal-dialog">								
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+										<h4 class="modal-title">Add Expense Details</h4>
+									</div>
+									<div class="modal-body">
+										<form class="form-manage" action="AddExpense" method="post">
+											Entity name: <input type="text" class="form-control" name="entityname" placeholder="Expense Entity" required/>
+											Group Id:	 <input type="text" class="form-control" name="grpid" placeholder="Group Name" required"/>
+											User Id:	 <input type="text" class="form-control" name="usrid" placeholder="Author" required"/>
+											Amount:		 <input type="text" class="form-control" name="amount" placeholder="Price" required"/>
+											<input type="submit" class="btn btn-lg btn-default btn-block" value="submit" />
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+			
 		</nav>
 	</div>
 </body>
