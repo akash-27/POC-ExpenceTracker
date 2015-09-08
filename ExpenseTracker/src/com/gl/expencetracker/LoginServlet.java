@@ -148,12 +148,12 @@ private static final long serialVersionUID = 1L;
 			grpDetail.setGrpId(rs.getInt("grpid"));
 			grpDetail.setGrpName(rs.getString("grpname"));
 			grpDetail.setCreatedBy(rs.getString("createdby"));
-			try {
-				grpDetail.setCreatedDate(new SimpleDateFormat().parse(rs.getString("createddate")));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			try {
+//				grpDetail.setCreatedDate(new SimpleDateFormat().parse(rs.getString("createddate")));
+//			} catch (ParseException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 
 		}
     	return grpDetail;

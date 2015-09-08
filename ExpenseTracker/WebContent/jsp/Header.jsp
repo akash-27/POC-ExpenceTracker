@@ -39,6 +39,36 @@
 			});
 </script>
 <script type="text/javascript">
+
+	
+	function checkLength() {
+		var pass1 = document.getElementById("grp");
+		var ok = true;
+		if (pass1.value == null ) {
+			alert('can not be null');
+			return false;
+		}
+		if (pass1.value.length < 4) {
+			alert('length must be greter than or equal to 4 characters');
+			document.getElementById('grp').focus();
+			return false;
+		}
+		return ok;
+	}
+	function checkLength1() {
+		var pass1 = document.getElementById("grp1");
+		var ok = true;
+		if (pass1.value == null ) {
+			alert('can not be null');
+			return false;
+		}
+		if (pass1.value.length < 4) {
+			alert('length must be greter than or equal to 4 characters');
+			document.getElementById('grp1').focus();
+			return false;
+		}
+		return ok;
+	}
 	function validpass() {
 		var pass1 = document.getElementById("pass1");
 		var pass2 = document.getElementById("pass2");
@@ -53,7 +83,7 @@
 			document.getElementById('pass1').focus();
 			return false;
 		}
-		if(p3.value == pass1.value){
+		if (p3.value == pass1.value) {
 			alert("Old Password and New Password is Same!!!");
 			ok = false;
 		}
@@ -67,14 +97,15 @@
 	}
 	function validateEmail() {
 		var email = document.getElementById('email');
-	    var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-	    if (!regex.test(email.value)) {
-	    	alert('!!!Invalid E-mail id!!!')
-	    	document.getElementById('email').focus();
-	    	return false;;
-	    }
+		var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+		if (!regex.test(email.value)) {
+			alert('!!!Invalid E-mail id!!!')
+			document.getElementById('email').focus();
+			return false;
+			;
+		}
 	}
-	
+
 	function validatePhone() {
 		var ph = document.getElementById('phone');
 		var regex = /^[789]\d{9}$/;
@@ -84,24 +115,26 @@
 			return false;
 		}
 	}
-	function PasswordValidate(){
-		var password=document.getElementById("oldpass").value
+	function PasswordValidate() {
+		var password = document.getElementById("oldpass").value
 		$.ajax({
 			url : 'VerifyOldPass',
-            type : 'GET',
-            dataType : 'text',
-            data : {oldpass : password},
-            success : function(data) {
-                if(data != "SUCCESS"){
-                   alert("Old Password Mismatch");
-                   $("#pass").hide();
-                   return false;
-                }else if (data == "SUCCESS"){
-                	$("#pass").show();
-                   return true;               
-                }   
-          
-		}
+			type : 'GET',
+			dataType : 'text',
+			data : {
+				oldpass : password
+			},
+			success : function(data) {
+				if (data != "SUCCESS") {
+					alert("Old Password Mismatch");
+					$("#pass").hide();
+					return false;
+				} else if (data == "SUCCESS") {
+					$("#pass").show();
+					return true;
+				}
+
+			}
 		});
 		return false;
 	}
@@ -138,6 +171,10 @@ class
 <title>Header Page</title>
 </head>
 <body>
+	<%!ExpenseUser curUser;%>
+	<%
+		curUser = (ExpenseUser) session.getAttribute("user");
+	%>
 	<div class="container">
 		<nav class="navbar navbar-inverse">
 			<div class="navbar-header">
@@ -147,7 +184,7 @@ class
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">HOME</a>
+				<a class="navbar-brand" href="welcome.jsp">HOME</a>
 			</div>
 			<div class="collapse navbar-collapse js-navbar-collapse">
 				<ul class="nav navbar-nav">
@@ -177,6 +214,7 @@ class
 							</ul></li>
 						<li><a href="#" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#addexpense">Add Expenses</a></li>
 						<li><a href="Logout" class="btn btn-primary btn-lg "> Logout</a></li>
+						<li><font color="Green">&nbsp; Welcome <%=curUser.getUserName()%></font></li>
 					</ul>
 			</div>
 
@@ -191,10 +229,10 @@ class
 						</div>
 						<div class="modal-body">
 							<form class="form-manage" action="CreateGroup" method="post">
-								Group Name: <input type="text" class="form-control" placeholder="Groupname" name="grp" required autofocus> 
+								Group Name: <input type="text" class="form-control" placeholder="Groupname" id="grp" name="grp" required autofocus> 
 <!-- 								Created By:	<input type="text" -->
 <!-- 									class="form-control" name="usr" placeholder="Createdby" required> -->
-								<input type="submit" class="btn btn-lg btn-default btn-block" value="Create" />
+								<input type="submit" class="btn btn-lg btn-default btn-block" value="Create" onclick="return checkLength()"/>
 							</form>
 						</div>
 						<div class="modal-footer">
@@ -216,7 +254,7 @@ class
 						<div class="modal-body">
 							<form class="form-manage" action="EditGroup" method="post">
 									<%@include file="./GrpCommon.jsp" %><br>
-									New Group Name: <input type="text" name="newgrpname" class="form-control" placeholder="NewGroupname" required><br>
+									New Group Name: <input type="text" name="newgrpname" class="form-control" placeholder="NewGroupname" id="grp1" name="grp1" onblur="return checkLength1()"   required><br>
 								   <input type="submit" class="btn btn-lg btn-default btn-block" value="Edit" />
 							</form>
 						</div>
@@ -263,9 +301,6 @@ class
 									</div>
 									<div class="modal-body">
 										<form class="form-manage" action="EditProf" method="post">
-										<%!ExpenseUser curUser ;%>
-										<% curUser = (ExpenseUser) session.getAttribute("user");
-										%>
 											User Name: <input type="text" class="form-control" name="username" placeholder="Username" value='<%=curUser.getUserName()%>' disabled="disabled" required > <br>
 											Mobile Number: <input type="text" class="form-control" name="phone" id="phone" placeholder="phone" value='<%=curUser.getMobNumber()%>' onblur="validatePhone()"> <br>
 											Address: <input type="text" class="form-control" name="address" placeholder="Address" value='<%=curUser.getAddress()%>'><br>
@@ -332,5 +367,6 @@ class
 			
 		</nav>
 	</div>
+	
 </body>
 </html>
