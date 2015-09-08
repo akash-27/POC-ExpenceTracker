@@ -46,7 +46,6 @@ public class ChangePassword extends HttpServlet {
 		String oldpass = request.getParameter("oldpass");
 		String newpass = request.getParameter("newpass");
 		String confpass = request.getParameter("confpass");
-		//extract userid value from session
 
 
 		Connection dbConnection = null;

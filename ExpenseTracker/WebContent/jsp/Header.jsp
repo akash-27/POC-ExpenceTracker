@@ -190,10 +190,11 @@ class
 							<h4 class="modal-title">Create Group</h4>
 						</div>
 						<div class="modal-body">
-							<form class="form-manage" action="" method="">
-								<input type="text" class="form-control" placeholder="Groupname"
-									required autofocus> <input type="text"
-									class="form-control" placeholder="Createdby" required>
+							<form class="form-manage" action="Create" method="post">
+								Group Name: <input type="text" class="form-control" placeholder="Groupname" name="grp"
+									required autofocus> 
+								Created By:	<input type="text"
+									class="form-control" name="usr" placeholder="Createdby" required>
 								<input type="submit" class="btn btn-lg btn-default btn-block"
 									value="Create" />
 							</form>

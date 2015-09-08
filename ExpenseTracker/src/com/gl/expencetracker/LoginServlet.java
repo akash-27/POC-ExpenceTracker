@@ -113,7 +113,8 @@ private static final long serialVersionUID = 1L;
     {
     	ArrayList<ExpenseGroups> grpList = new ArrayList<>();
     	
-    	String searchQuery ="select grpid from usrgrpmap where userid=?";
+    //	String searchQuery ="select grpid from usrgrpmap where userid=?";
+    	String searchQuery ="select * from groupdetails where createdby=?";
     	PreparedStatement prepareStmt = null;
     	prepareStmt = con.prepareStatement(searchQuery);
 
