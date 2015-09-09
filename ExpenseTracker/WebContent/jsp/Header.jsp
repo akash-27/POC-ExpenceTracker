@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="com.gl.expencetracker.*"%>
+<%@page import="com.gl.expensetracker.object.*" %>
 	
 <!DOCTYPE html>
 <html>
@@ -147,7 +148,7 @@ class
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">HOME</a>
+				<a class="navbar-brand" href="welcome.jsp">HOME</a>
 			</div>
 			<div class="collapse navbar-collapse js-navbar-collapse">
 				<ul class="nav navbar-nav">
@@ -314,8 +315,9 @@ class
 										<h4 class="modal-title">Add Expense Details</h4>
 									</div>
 									<div class="modal-body">
-										<form class="form-manage" action="AddExpense" method="post">
-											Select Group: <input type="text" class="form-control" name="grpName" placeholder="Expense Entity" required/>
+										<form class="form-manage" action="CurrentGrpServlet" method="post">
+											<%@include file="./GrpCommon.jsp" %><br>
+<!-- 											<p><a href="#" data-toggle="modal" data-target="#create">Create Group</a> -->
 											<input type="submit" class="btn btn-lg btn-default btn-block" value="submit" />
 										</form>
 									</div>
