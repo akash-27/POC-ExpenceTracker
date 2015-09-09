@@ -60,11 +60,11 @@ public class AddExpense extends HttpServlet {
 		String insertTableSQL = "INSERT INTO expensedetails "+
 				"(expensename,grpid,userid,amount,createddate) VALUES "
 				+ "(?,?,?,?,?)";
-		DatabaseUtils db = new DatabaseUtils();
+		
 
 		try {
 			System.out.println("Inserting");
-			dbConnection = db.getConnection();
+			dbConnection = DatabaseUtils.getInstance().getConnection();
 			prepareStmt = dbConnection.prepareStatement(insertTableSQL);
 
 			prepareStmt.setString(1, expenseEntity.getExpenseName());
@@ -87,8 +87,8 @@ public class AddExpense extends HttpServlet {
 
 			if (prepareStmt != null) {
 				prepareStmt.close();
+				dbConnection.close();
 			}
-			db.close();
 		}
 	}
 

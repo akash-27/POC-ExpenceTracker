@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.gl.expencetracker.ExpenseUser;
 import com.gl.expensetracker.connection.DatabaseUtils;
+import com.gl.expensetracker.service.manageprofile.ManageProfileService;
 
 /**
  * Servlet implementation class EditProf
@@ -43,54 +44,8 @@ public class EditProf extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String username = request.getParameter("username");
-		String phone = request.getParameter("phone");
-		String address = request.getParameter("address");
-		String email = request.getParameter("email");
-		//extract userid value from session
-		Connection dbConnection = null;
-		PreparedStatement prepareStmt = null;
-		String updatesql = "update userdetails set phone=?, emailid=?, address=? "
-				+ " where userid=?";
-
-		try {
-			HttpSession session = request.getSession(true);
-			dbConnection = DatabaseUtils.getInstance().getConnection();
-			prepareStmt = dbConnection.prepareStatement(updatesql);
-			ExpenseUser curruser = new ExpenseUser();
-			curruser = (ExpenseUser) session.getAttribute("user");
-			prepareStmt.setString(1, phone);
-			prepareStmt.setString(3, address);
-			prepareStmt.setString(2, email);
-			prepareStmt.setInt(4, curruser.getUserId());
-			// execute update SQL stetement
-			prepareStmt.executeUpdate();
-			curruser.setAddress(address);
-			curruser.seteMail(email);
-			curruser.setMobNumber(phone);
-			session.setAttribute("user", curruser);
-			RequestDispatcher requestDispatcher; 
-			requestDispatcher = request.getRequestDispatcher("welcome.jsp");
-			requestDispatcher.forward(request, response);
-
-		} catch (SQLException e) {
-			response.sendRedirect("Error.jsp");
-			System.out.println(e.getMessage());
-
-		} finally {
-
-			if (prepareStmt != null) {
-				try {
-					prepareStmt.close();
-					if(dbConnection != null)
-						dbConnection.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
-		}
+		ManageProfileService manageprof = new ManageProfileService();
+		manageprof.EditProfile(request, response);
 	}
 }
 
