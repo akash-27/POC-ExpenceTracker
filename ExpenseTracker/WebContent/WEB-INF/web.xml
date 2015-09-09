@@ -10,18 +10,11 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>/jsp/login.jsp</welcome-file>
   </welcome-file-list>
-  <servlet>
-    <servlet-name>registered</servlet-name>
-    <jsp-file>/jsp/registered.jsp</jsp-file>
   </servlet>
   <servlet>
     <servlet-name>LoginFailure</servlet-name>
     <jsp-file>/jsp/LoginFailure.jsp</jsp-file>
   </servlet>
-  <servlet-mapping>
-    <servlet-name>registered</servlet-name>
-    <url-pattern>/jsp/registered</url-pattern>
-  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>LoginFailure</servlet-name>
     <url-pattern>/jsp/LoginFailure</url-pattern>
