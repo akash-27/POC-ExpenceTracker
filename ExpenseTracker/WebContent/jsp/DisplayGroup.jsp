@@ -26,15 +26,27 @@
 
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<style>
+p {text-align:center;}
+</style>
 </head>
 <body>
 
 	<c:choose>
 		<c:when test="${sessionScope.grpList.size() > 0}">
-			<%@ include file="./GroupDesign.jsp" %>
+			<%@ include file="./GroupDesign.jsp"%>
 		</c:when>
 		<c:otherwise>
-			<li><a href="" >Add Group </a>
+			
+			<div class="container">
+			<H2 align="center"> <font color="Green">Tracking your expenses & money
+						is now simpler!</font></H2>
+				<img src="../resources/groups.jpg"
+					alt="Center Align image in bootstrap"
+					class="img-rounded center-block">
+					<a href="" data-toggle="modal" data-target="#create" class="text-center"><font
+				color="Blue"><h3>Add Group</h3></font> </a>
+			</div>
 		</c:otherwise>
 	</c:choose>
 

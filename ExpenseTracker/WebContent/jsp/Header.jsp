@@ -275,10 +275,11 @@ class
 							<h4 class="modal-title">Delete Group</h4>
 						</div>
 						<div class="modal-body">
-							<form class="form-manage" action="" method="">
-								<input type="text" class="form-control" placeholder="Groupname"
-									required autofocus> <input type="text"
-									class="form-control" placeholder="Createdby" required>
+							<form class="form-manage" action="DeleteGroup" method="post">
+							<%@include file="./GrpCommon.jsp" %><br>
+<!-- 								<input type="text" class="form-control" placeholder="Groupname" -->
+<!-- 									required autofocus> <input type="text" -->
+<!-- 									class="form-control" placeholder="Createdby" required> -->
 								<input type="submit" class="btn btn-lg btn-default btn-block"
 									value="Delete" />
 							</form>
