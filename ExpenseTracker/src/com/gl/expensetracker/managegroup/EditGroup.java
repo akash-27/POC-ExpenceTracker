@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,9 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.gl.expencetracker.ExpenseGroups;
-import com.gl.expencetracker.ExpenseUser;
 import com.gl.expensetracker.connection.DatabaseUtils;
+import com.gl.expensetracker.object.ExpenseGroups;
 
 /**
  * Servlet implementation class EditGroup

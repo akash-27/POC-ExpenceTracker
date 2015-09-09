@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.gl.expencetracker.ExpenseGroups;
-import com.gl.expencetracker.ExpenseUser;
-import com.gl.expencetracker.LoginServlet;
+import com.gl.expensetracker.authentication.LoginServlet;
 import com.gl.expensetracker.connection.DatabaseUtils;
+import com.gl.expensetracker.object.ExpenseGroups;
+import com.gl.expensetracker.object.ExpenseUser;
 
 /**
  * Servlet implementation class CreateGroup

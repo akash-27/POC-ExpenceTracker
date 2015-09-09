@@ -1,7 +1,4 @@
-package com.gl.expencetracker;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+package com.gl.expensetracker.object;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,11 +21,11 @@ public class ExpenseEntity {
 	public void setGrpId(int grpId) {
 		this.grpId = grpId;
 	}
-	public int getExpendeId() {
+	public int getExpenseId() {
 		return expenseId;
 	}
-	public void setExpendeId(int expendeId) {
-		this.expenseId = expendeId;
+	public void setExpenseId(int expenseId) {
+		this.expenseId = expenseId;
 	}
 	public int getUserId() {
 		return userId;
@@ -52,9 +49,12 @@ public class ExpenseEntity {
 	public void createExpenseEntityfromRequest(HttpServletRequest request) 
 	{
 		this.expenseName = request.getParameter("expensename");
-		this.grpId = Integer.parseInt(request.getParameter("grpid"));
-		this.userId = Integer.parseInt(request.getParameter("usrid"));
-		this.amount = Float.parseFloat(request.getParameter("amount"));
-		this.createdDate = new SimpleDateFormat("mm/dd/yyyy").format(new Date());
+		this.amount =  Float.parseFloat(request.getParameter("price"));
 	}
+	@Override
+	public String toString() {
+		return "ExpenseEntity [expenseName=" + expenseName + " - "
+				+ amount ;
+	}	
+	
 }

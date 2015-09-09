@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.gl.expencetracker.ExpenseUser;
 import com.gl.expensetracker.connection.DatabaseUtils;
+import com.gl.expensetracker.object.ExpenseUser;
 
 import java.sql.*;
 

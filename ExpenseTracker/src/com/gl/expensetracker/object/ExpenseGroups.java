@@ -1,4 +1,4 @@
-package com.gl.expencetracker;
+package com.gl.expensetracker.object;
 
 import java.util.Date;
 
