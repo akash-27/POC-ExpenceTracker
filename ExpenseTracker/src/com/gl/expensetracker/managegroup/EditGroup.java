@@ -1,23 +1,12 @@
 package com.gl.expensetracker.managegroup;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.gl.expencetracker.object.ExpenseUser;
 import com.gl.expenetracker.service.managegroup.ManageGroupService;
-import com.gl.expensetracker.connection.DatabaseUtils;
-import com.gl.expensetracker.object.ExpenseGroups;
 
 /**
  * Servlet implementation class EditGroup
@@ -44,7 +33,6 @@ public class EditGroup extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		ManageGroupService managegrp = new ManageGroupService();

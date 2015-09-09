@@ -10,7 +10,6 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>/jsp/login.jsp</welcome-file>
   </welcome-file-list>
-  </servlet>
   <servlet>
     <servlet-name>LoginFailure</servlet-name>
     <jsp-file>/jsp/LoginFailure.jsp</jsp-file>
