@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="com.gl.expencetracker.*"%>
+<%@page import="com.gl.expensetracker.object.*" %>
 	
 <!DOCTYPE html>
 <html>
@@ -350,8 +351,9 @@ class
 										<h4 class="modal-title">Add Expense Details</h4>
 									</div>
 									<div class="modal-body">
-										<form class="form-manage" action="AddExpense" method="post">
-											Select Group: <input type="text" class="form-control" name="grpName" placeholder="Expense Entity" required/>
+										<form class="form-manage" action="CurrentGrpServlet" method="post">
+											<%@include file="./GrpCommon.jsp" %><br>
+<!-- 											<p><a href="#" data-toggle="modal" data-target="#create">Create Group</a> -->
 											<input type="submit" class="btn btn-lg btn-default btn-block" value="submit" />
 										</form>
 									</div>

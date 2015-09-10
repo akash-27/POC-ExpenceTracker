@@ -1,4 +1,4 @@
-package com.gl.expencetracker;
+package com.gl.expensetracker.authentication;
 
 import java.io.IOException;
 
@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.gl.expensetracker.connection.DatabaseUtils;
+import com.gl.expensetracker.object.ExpenseGroups;
+import com.gl.expensetracker.object.ExpenseUser;
 
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 /**
  * Servlet implementation class LoginServlet
@@ -66,19 +66,15 @@ private static final long serialVersionUID = 1L;
     			user.setAddress(rs.getString("address"));
     			user.setIsValidated(rs.getBoolean("isvalidated"));
 //    			user.setCreatedOn(rs.getDate("createdon"));
+    			
     			//setting user-details in session
     			session.setAttribute("user", user);
     			
     			grpList = getGroupListfromDB(dbConnection, user.getUserId());   
     			session.setAttribute("grpList", grpList);
     			
-    			
     			//redirecting to home page
-    			response.sendRedirect("welcome.jsp");
-    			
-//    			for (ExpenseGroups temp : grpList) {
-//    				response.getWriter().append(temp.toString());
-//    			}    			
+    			response.sendRedirect("welcome.jsp");    			
     		}
     	}
     	catch (SQLException e) {
@@ -91,7 +87,6 @@ private static final long serialVersionUID = 1L;
     			try {
     				prepareStmt.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
     		}
@@ -100,7 +95,6 @@ private static final long serialVersionUID = 1L;
 				try {
 					dbConnection.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -108,7 +102,6 @@ private static final long serialVersionUID = 1L;
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	// TODO Auto-generated method stub
     	doGet(request, response);
     }
     
@@ -132,7 +125,7 @@ private static final long serialVersionUID = 1L;
     	return grpList;    	
     }
     
-    public ExpenseGroups getGroupfromDB(Connection con, int grpId) throws SQLException 
+    public static ExpenseGroups getGroupfromDB(Connection con, int grpId) throws SQLException 
     {
     	ExpenseGroups grpDetail = new ExpenseGroups();
     	String searchQuery ="select * from groupdetails where grpid=?";
@@ -158,17 +151,14 @@ private static final long serialVersionUID = 1L;
 		}
     	return grpDetail;
     }
-    public int getCountofGroup(Connection con, int grpId) throws SQLException 
+    public static int getCountofGroup(Connection con, int grpId) throws SQLException 
     {
     	String countQuery = "select count(*) AS total from usrgrpmap where grpid=?";
     	PreparedStatement prepareStmt = null;
     	prepareStmt = con.prepareStatement(countQuery);
     	prepareStmt.setInt(1, grpId);
-    	
-    	System.out.println(prepareStmt);
     	ResultSet rs = prepareStmt.executeQuery(); 
     	if(rs.next()){
-    		System.out.println(rs.getInt("total"));
     		return rs.getInt("total");
         }  
 		return 0;   

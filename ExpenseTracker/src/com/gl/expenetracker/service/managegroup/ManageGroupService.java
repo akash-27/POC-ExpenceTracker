@@ -6,20 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.gl.expencetracker.ExpenseGroups;
-import com.gl.expencetracker.ExpenseUser;
-import com.gl.expencetracker.LoginServlet;
 import com.gl.expencetracker.UserId;
+import com.gl.expensetracker.object.ExpenseGroups;
+import com.gl.expensetracker.object.ExpenseUser;
+import com.gl.expensetracker.authentication.LoginServlet;
 import com.gl.expensetracker.connection.DatabaseUtils;
 
 public class ManageGroupService {

@@ -42,10 +42,11 @@
                     <ul class="thumbnails" style="list-style-type:none">
 						<c:forEach var="item" items="${sessionScope.grpList}">
 							<li class="col-sm-3">
-							<div class="fff">
-								<div class="thumbnail">
-									<a href="#"><img src="../resources/logoExpenseTracker.png" alt=""></a>
-								</div>
+								<div class="fff">
+									<div class="thumbnail">
+										<a href="#"><img src="../resources/logoExpenseTracker.png"
+											alt=""></a>
+									</div>
 								<div class="caption">
 								<div style="clear: both">
 								<h6 style="float: left" ><font color="Brown">Group Name :</font></h6>
@@ -69,12 +70,12 @@
                     </form>
               </div>
        
-	   <nav>
-			<ul class="control-box pager">
-				<li><a data-slide="prev" href="#myCarousel" class=""><i class="glyphicon glyphicon-chevron-left"></i></a></li>
-				<li><a data-slide="next" href="#myCarousel" class=""><i class="glyphicon glyphicon-chevron-right"></i></a></li>
-			</ul>
-		</nav>
+<!-- 	   <nav> -->
+<!-- 			<ul class="control-box pager"> -->
+<!-- 				<li><a data-slide="prev" href="#myCarousel" class=""><i class="glyphicon glyphicon-chevron-left"></i></a></li> -->
+<!-- 				<li><a data-slide="next" href="#myCarousel" class=""><i class="glyphicon glyphicon-chevron-right"></i></a></li> -->
+<!-- 			</ul> -->
+<!-- 		</nav> -->
 	   
                               
     </div>
