@@ -13,7 +13,7 @@ import com.gl.expenetracker.service.managegroup.ManageGroupService;
 /**
  * Servlet implementation class VerifyEmail
  */
-@WebServlet("/jsp/VerifyEmail")
+@WebServlet("/jsp/VerifyPhone")
 public class VerifyPhone extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

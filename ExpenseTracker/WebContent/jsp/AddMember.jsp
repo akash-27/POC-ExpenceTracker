@@ -68,24 +68,24 @@ function validatePhone() {
 		$( "#usrname1" ).prop( "disabled", false );
 		return false;
 	}else{
-// 		$.ajax({
-// 			url : 'VerifyPhone',
-// 			type : 'GET',
-// 			dataType : 'text',
-// 			data : {
-// 				phoneno1 : ph
-// 			},
-// 			success : function(data) {
-// 				if (data != "SUCCESS") {
-// 					alert("Phone does not exists");
+		$.ajax({
+			url : 'VerifyPhone',
+			type : 'GET',
+			dataType : 'text',
+			data : {
+				phoneno1 : ph
+			},
+			success : function(data) {
+				if (data != "SUCCESS") {
+					alert("Phone does not exists");
 					
-// 					return false;
-// 				} else if (data == "SUCCESS") {
-// 					return true;
-// 				}
+					return false;
+				} else if (data == "SUCCESS") {
+					return true;
+				}
 
-// 			}
-// 		});
+			}
+		});
 		$( "#emailid1" ).prop( "disabled", true );
 		$( "#usrname1" ).prop( "disabled", true );
 		

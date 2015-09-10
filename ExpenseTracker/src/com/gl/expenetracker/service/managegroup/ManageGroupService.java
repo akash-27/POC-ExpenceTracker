@@ -41,7 +41,7 @@ public class ManageGroupService {
 
 			dbConnection = DatabaseUtils.getInstance().getConnection();
 			dbConnection.setAutoCommit(false);
-			
+
 			prepareStmt = dbConnection.prepareStatement(insertsql);
 			java.util.Date date = new Date();
 			Object param = new java.sql.Timestamp(date.getTime());
@@ -177,15 +177,15 @@ public class ManageGroupService {
 		}
 	}
 	public ArrayList<UserId> getUserNameFromDb() throws SQLException{
-		
+
 		ArrayList<UserId> usrlist = new ArrayList<UserId>();
-		
+
 		String searchQuery ="select userid, username from userdetails";
 		Statement stmt = null;
-    	Connection dbConnection = null;
-    	dbConnection = DatabaseUtils.getInstance().getConnection();
-    	stmt = dbConnection.createStatement();
-    	ResultSet rs = stmt.executeQuery(searchQuery);
+		Connection dbConnection = null;
+		dbConnection = DatabaseUtils.getInstance().getConnection();
+		stmt = dbConnection.createStatement();
+		ResultSet rs = stmt.executeQuery(searchQuery);
 		while(rs.next()) {
 			UserId user = new UserId();
 			user.setUserId(rs.getInt("userid"));
@@ -194,8 +194,8 @@ public class ManageGroupService {
 		}
 		return usrlist;
 	}
-	
-	
+
+
 	public void DeleteGroupDetails(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		String selectedItem = request.getParameter("grpname");
 		Connection dbConnection = null;
@@ -213,7 +213,7 @@ public class ManageGroupService {
 			prepareStmt.setInt(1, grpid);
 			// execute update SQL stetement
 			prepareStmt.executeUpdate();
-		    user = (ExpenseUser) session.getAttribute("user");
+			user = (ExpenseUser) session.getAttribute("user");
 			grpList = logser.getGroupListfromDB(dbConnection, user.getUserId());   
 			session.setAttribute("grpList", grpList);
 			response.sendRedirect("welcome.jsp");
@@ -236,115 +236,154 @@ public class ManageGroupService {
 
 		}
 	}
-	
-	 public void AddMembersDetails(HttpServletRequest request, HttpServletResponse response){
-	        String selectedItem = request.getParameter("usrname1");
-	        String newgrpname = request.getParameter("addgrpname1");
-	        String phone = request.getParameter("phoneno1");
-	        String emailid = request.getParameter("emailid1");
-	        Connection dbConnection = null;
-	        PreparedStatement prepareStmt = null;
-	        ResultSet rs = null;
-	        String selectsql = null;
-	       
-	       
-	        try {
-	        		dbConnection = DatabaseUtils.getInstance().getConnection();
 
-	            	 if(!selectedItem.equalsIgnoreCase("")){
-	            		 selectsql = "insert into usrgrpmap(grpid,userid) values(?,?);";
-	     	             int usrid = Integer.parseInt(selectedItem);
-	     	             int grpid = Integer.parseInt(newgrpname);
-	     	             prepareStmt = dbConnection.prepareStatement(selectsql);
-	     	             prepareStmt.setInt(1, grpid);
-	     	             prepareStmt.setInt(2, usrid);
-	     	             prepareStmt.executeUpdate();
-	     	        }
-	               
-	             
-	        } catch (SQLException e) {
-				System.out.println(e.getMessage());
-				try {
-					response.sendRedirect("Error.jsp");
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			} finally {
+	public void AddMembersDetails(HttpServletRequest request, HttpServletResponse response){
+		String selectedItem = request.getParameter("usrname1");
+		String newgrpname = request.getParameter("addgrpname1");
+		String phone = request.getParameter("phoneno1");
+		String emailid = request.getParameter("emailid1");
+		Connection dbConnection = null;
+		PreparedStatement prepareStmt = null;
+		ResultSet rs = null;
+		String selectsql = null;
+		int usrid = 0;
+		ArrayList<ExpenseGroups> grpList;
 
-				if (prepareStmt != null) {
-					try {
-						prepareStmt.close();
-						if(dbConnection != null)
-							dbConnection.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
 
+		try {
+			dbConnection = DatabaseUtils.getInstance().getConnection();
+
+			if(!selectedItem.equalsIgnoreCase("")){
+				selectsql = "insert into usrgrpmap(grpid,userid) values(?,?);";
+				 usrid = Integer.parseInt(selectedItem);
+				int grpid = Integer.parseInt(newgrpname);
+				prepareStmt = dbConnection.prepareStatement(selectsql);
+				prepareStmt.setInt(1, grpid);
+				prepareStmt.setInt(2, usrid);
+				prepareStmt.executeUpdate();
 			}
-	    }
-	 
-	 public void verifyEmail(HttpServletRequest request, HttpServletResponse response) throws IOException{
-	        String oldpass = request.getParameter("emailid1");
-	        String Msg = null;
-	        Statement stmt = null;
-	    	Connection dbConnection = null;
-			String updatesql = "select userid from userdetails where emailid='" + oldpass + "';";
+			else if(!phone.equalsIgnoreCase("")){
+				selectsql = "insert into usrgrpmap(grpid,userid) values(?,?);";
+				 usrid = getUserIdFromDbPhone(phone); 
+				int grpid = Integer.parseInt(newgrpname);
+				prepareStmt = dbConnection.prepareStatement(selectsql);
+				prepareStmt.setInt(1, grpid);
+				prepareStmt.setInt(2, usrid);
+				prepareStmt.executeUpdate();
+			}
+			else if(!emailid.equalsIgnoreCase("")){
+				selectsql = "insert into usrgrpmap(grpid,userid) values(?,?);";
+			    usrid = getUserIdFromDb(emailid);
+				int grpid = Integer.parseInt(newgrpname);
+				prepareStmt = dbConnection.prepareStatement(selectsql);
+				prepareStmt.setInt(1, grpid);
+				prepareStmt.setInt(2, usrid);
+				prepareStmt.executeUpdate();
+			}
+			HttpSession session = request.getSession(true);
+			LoginServlet log = new LoginServlet();
+			grpList = log.getGroupListfromDB(dbConnection,usrid );   
+			session.setAttribute("grpList", grpList);
 
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 			try {
-				
-		    	dbConnection = DatabaseUtils.getInstance().getConnection();
-		    	stmt = dbConnection.createStatement();
-		    	ResultSet rs = stmt.executeQuery(updatesql);
-				
-	            response.setContentType("text/plain");
-	           
-	            if (!rs.next()){
-	                Msg = "FAILURE";
-	            }
-	            else{
-	                Msg = "SUCCESS";
-	            }
+				response.sendRedirect("Error.jsp");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} finally {
 
-	            response.getWriter().write(Msg);
-	        } catch (SQLException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	        }
-	    }
-	 public void verifyPhone(HttpServletRequest request, HttpServletResponse response) throws IOException{
-//	        String oldpass = request.getParameter("phoneno1");
-//	        String Msg = null;
-//	        Statement stmt = null;
-//	    	Connection dbConnection = null;
-//			String updatesql = "select userid from userdetails where phone='" + oldpass + "';";
-//
-//			try {
-//				
-//		    	dbConnection = DatabaseUtils.getInstance().getConnection();
-//		    	stmt = dbConnection.createStatement();
-//		    	System.out.println("verifyPhone "+" "+ oldpass +"" + updatesql );
-//		    	ResultSet rs = stmt.executeQuery(updatesql);
-//				
-//	            response.setContentType("text/plain");
-//	           
-//	            if (!rs.next()){
-//	                Msg = "FAILURE";
-//	            }
-//	            else{
-//	                Msg = "SUCCESS";
-//	            }
-//
-//	            response.getWriter().write(Msg);
-//	        } catch (SQLException e) {
-//	            // TODO Auto-generated catch block
-//	            e.printStackTrace();
-//	        }
-	    }
+			if (prepareStmt != null) {
+				try {
+					prepareStmt.close();
+					if(dbConnection != null)
+						dbConnection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 
+		}
+	}
 
+	public void verifyEmail(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String oldpass = request.getParameter("emailid1");
+		String Msg = null;
+
+		try {
+
+			int rs = getUserIdFromDb(oldpass); 
+			response.setContentType("text/plain");
+
+			if (rs == 0){
+				Msg = "FAILURE";
+			}
+			else{
+				Msg = "SUCCESS";
+			}
+
+			response.getWriter().write(Msg);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			response.sendRedirect("Error.jsp");
+			e.printStackTrace();
+		}
+	}
+	public void verifyPhone(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String oldpass = request.getParameter("phoneno1");
+		String Msg = null;
+		try {
+
+			int rs = getUserIdFromDbPhone(oldpass); 
+			response.setContentType("text/plain");
+
+			if (rs == 0){
+				Msg = "FAILURE";
+			}
+			else{
+				Msg = "SUCCESS";
+			}
+
+			response.getWriter().write(Msg);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			response.sendRedirect("Error.jsp");
+			e.printStackTrace();
+		}
+	}
+
+	public int getUserIdFromDb(String oldpass) throws SQLException{
+		Statement stmt = null;
+		Connection dbConnection = null;
+		String updatesql = "select userid from userdetails where emailid='" + oldpass + "';";
+		int usrid = 0;
+		dbConnection = DatabaseUtils.getInstance().getConnection();
+		stmt = dbConnection.createStatement();
+		ResultSet rs = stmt.executeQuery(updatesql);
+		while(rs.next()){
+			usrid = rs.getInt("userid");
+		}
+
+		return usrid;
+	}
+	public int getUserIdFromDbPhone(String oldpass) throws SQLException{
+		Statement stmt = null;
+		Connection dbConnection = null;
+		String updatesql = "select userid from userdetails where phone='" + oldpass + "';";
+		int usrid = 0;
+
+		dbConnection = DatabaseUtils.getInstance().getConnection();
+		stmt = dbConnection.createStatement();
+		ResultSet rs = stmt.executeQuery(updatesql);
+		while(rs.next()){
+			usrid = rs.getInt("userid");
+		}
+
+		return usrid;
+	}
 }
 
 
