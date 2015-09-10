@@ -19,7 +19,19 @@
 <script type="text/javascript" src="../resources/content.js"></script>
 
 <script type="text/javascript">
-	
+function checkname() {
+	var name = document.getElementById("usrname1");
+	if (name.value == "") {
+		$( "#phoneno1" ).prop( "disabled", false );
+		$( "#emailid1" ).prop( "disabled", false );
+		return false;
+	}else{
+		$( "#phoneno1" ).prop( "disabled", true );
+		$( "#emailid1" ).prop( "disabled", true );
+		
+	}
+	return true;
+}
 </script>
 
 <style type="text/css">
@@ -66,8 +78,8 @@ class
 </head>
 <body>
 	User Number:
-	<select class="form-control" style="" name="usrname" id="usrname"
-		style="width:200px">
+	<select class="form-control" style="" name="usrname1" id="usrname1"
+		style="width:200px" onblur="checkname()">
 		 <option> 
     	</option> 
 		<c:forEach var="item" items="${sessionScope.usrList}">

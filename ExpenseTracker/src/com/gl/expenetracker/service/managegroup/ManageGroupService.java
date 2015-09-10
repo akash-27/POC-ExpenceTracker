@@ -8,10 +8,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import com.gl.expencetracker.UserId;
 import com.gl.expensetracker.object.ExpenseGroups;
 import com.gl.expensetracker.object.ExpenseUser;
@@ -234,6 +236,114 @@ public class ManageGroupService {
 
 		}
 	}
+	
+	 public void AddMembersDetails(HttpServletRequest request, HttpServletResponse response){
+	        String selectedItem = request.getParameter("usrname1");
+	        String newgrpname = request.getParameter("addgrpname1");
+	        String phone = request.getParameter("phoneno1");
+	        String emailid = request.getParameter("emailid1");
+	        Connection dbConnection = null;
+	        PreparedStatement prepareStmt = null;
+	        ResultSet rs = null;
+	        String selectsql = null;
+	       
+	       
+	        try {
+	        		dbConnection = DatabaseUtils.getInstance().getConnection();
+
+	            	 if(!selectedItem.equalsIgnoreCase("")){
+	            		 selectsql = "insert into usrgrpmap(grpid,userid) values(?,?);";
+	     	             int usrid = Integer.parseInt(selectedItem);
+	     	             int grpid = Integer.parseInt(newgrpname);
+	     	             prepareStmt = dbConnection.prepareStatement(selectsql);
+	     	             prepareStmt.setInt(1, grpid);
+	     	             prepareStmt.setInt(2, usrid);
+	     	             prepareStmt.executeUpdate();
+	     	        }
+	               
+	             
+	        } catch (SQLException e) {
+				System.out.println(e.getMessage());
+				try {
+					response.sendRedirect("Error.jsp");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			} finally {
+
+				if (prepareStmt != null) {
+					try {
+						prepareStmt.close();
+						if(dbConnection != null)
+							dbConnection.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+	    }
+	 
+	 public void verifyEmail(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	        String oldpass = request.getParameter("emailid1");
+	        String Msg = null;
+	        Statement stmt = null;
+	    	Connection dbConnection = null;
+			String updatesql = "select userid from userdetails where emailid='" + oldpass + "';";
+
+			try {
+				
+		    	dbConnection = DatabaseUtils.getInstance().getConnection();
+		    	stmt = dbConnection.createStatement();
+		    	ResultSet rs = stmt.executeQuery(updatesql);
+				
+	            response.setContentType("text/plain");
+	           
+	            if (!rs.next()){
+	                Msg = "FAILURE";
+	            }
+	            else{
+	                Msg = "SUCCESS";
+	            }
+
+	            response.getWriter().write(Msg);
+	        } catch (SQLException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        }
+	    }
+	 public void verifyPhone(HttpServletRequest request, HttpServletResponse response) throws IOException{
+//	        String oldpass = request.getParameter("phoneno1");
+//	        String Msg = null;
+//	        Statement stmt = null;
+//	    	Connection dbConnection = null;
+//			String updatesql = "select userid from userdetails where phone='" + oldpass + "';";
+//
+//			try {
+//				
+//		    	dbConnection = DatabaseUtils.getInstance().getConnection();
+//		    	stmt = dbConnection.createStatement();
+//		    	System.out.println("verifyPhone "+" "+ oldpass +"" + updatesql );
+//		    	ResultSet rs = stmt.executeQuery(updatesql);
+//				
+//	            response.setContentType("text/plain");
+//	           
+//	            if (!rs.next()){
+//	                Msg = "FAILURE";
+//	            }
+//	            else{
+//	                Msg = "SUCCESS";
+//	            }
+//
+//	            response.getWriter().write(Msg);
+//	        } catch (SQLException e) {
+//	            // TODO Auto-generated catch block
+//	            e.printStackTrace();
+//	        }
+	    }
+
 
 }
 

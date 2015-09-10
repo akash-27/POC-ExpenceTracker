@@ -51,7 +51,7 @@
 								<div style="clear: both">
 								<h6 style="float: left" ><font color="Brown">Group Name :</font></h6>
     							<h6 style="float: right"><font color="Blue">${item.grpName}</font></h6>
-    							<input type="hidden" name="grpname" value="${item.grpName}" />
+    							<input type="hidden" name="grpname" value="${item.grpId}" />
 								</div>
 								 
 								<div style="clear: both">

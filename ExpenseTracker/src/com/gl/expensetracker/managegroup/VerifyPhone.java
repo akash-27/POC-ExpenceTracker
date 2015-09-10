@@ -11,16 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.gl.expenetracker.service.managegroup.ManageGroupService;
 
 /**
- * Servlet implementation class AddMemberDetails
+ * Servlet implementation class VerifyEmail
  */
-@WebServlet("/jsp/AddMemberDetails")
-public class AddMemberDetails extends HttpServlet {
+@WebServlet("/jsp/VerifyEmail")
+public class VerifyPhone extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddMemberDetails() {
+    public VerifyPhone() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,6 +30,8 @@ public class AddMemberDetails extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		  ManageGroupService managegrp = new ManageGroupService();
+	      managegrp.verifyPhone(request, response);
 	}
 
 	/**
@@ -37,9 +39,6 @@ public class AddMemberDetails extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		ManageGroupService managegrp = new ManageGroupService();
-		managegrp.AddMembersDetails(request, response);
 	}
 
 }
