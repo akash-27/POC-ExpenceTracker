@@ -252,7 +252,16 @@ public class ManageGroupService {
 
 		try {
 			dbConnection = DatabaseUtils.getInstance().getConnection();
-
+			if(selectedItem.equalsIgnoreCase("")){
+				try {
+					response.sendRedirect("Error.jsp");
+					return;
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
 			if(!selectedItem.equalsIgnoreCase("")){
 				selectsql = "insert into usrgrpmap(grpid,userid) values(?,?);";
 				 usrid = Integer.parseInt(selectedItem);
@@ -281,9 +290,24 @@ public class ManageGroupService {
 				prepareStmt.executeUpdate();
 			}
 			HttpSession session = request.getSession(true);
+			ExpenseUser user;
+			user = (ExpenseUser) session.getAttribute("user");
 			LoginServlet log = new LoginServlet();
-			grpList = log.getGroupListfromDB(dbConnection,usrid );   
+			grpList = log.getGroupListfromDB(dbConnection,user.getUserId() );   
 			session.setAttribute("grpList", grpList);
+			try {
+				response.sendRedirect("welcome.jsp");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e.getMessage());
+				try {
+					response.sendRedirect("Error.jsp");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				e.printStackTrace();
+			}
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

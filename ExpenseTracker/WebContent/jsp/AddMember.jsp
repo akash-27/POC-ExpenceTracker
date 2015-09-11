@@ -22,7 +22,7 @@
 <script type="text/javascript" src="../resources/content.js"></script>
 
 <script type="text/javascript">
-function validateEmail() {
+function validateEmail1() {
 	var email = document.getElementById("emailid1").value;
 	var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 	if (!regex.test(email)) {
@@ -41,7 +41,7 @@ function validateEmail() {
 			},
 			success : function(data) {
 				if (data != "SUCCESS") {
-					alert("Email id does not exists");
+					alert("Email id does not exists in DB");
 					
 					return false;
 				} else if (data == "SUCCESS") {
@@ -58,7 +58,7 @@ function validateEmail() {
 	return true;
 }
 
-function validatePhone() {
+function validatePhone1() {
 	var ph = document.getElementById("phoneno1").value;
 	var regex = /^[789]\d{9}$/;
 	if (!regex.test(ph)) {
@@ -77,7 +77,7 @@ function validatePhone() {
 			},
 			success : function(data) {
 				if (data != "SUCCESS") {
-					alert("Phone does not exists");
+					alert("Phone number does not exists in DB");
 					
 					return false;
 				} else if (data == "SUCCESS") {
@@ -102,7 +102,7 @@ function validatePhone() {
 <title>Add Member</title>
 </head>
 <body> 
-<%-- <%@include file="Header.jsp"%> --%>
+<%@include file="Header.jsp"%>
 <div class="container">
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">
@@ -114,8 +114,8 @@ function validatePhone() {
 						<form class="form-signin" id="addmem1" action="AddMemberDetails" method="post">
 						<input type="hidden" class="form-control" name="addgrpname1" placeholder="Groupname" value='<%=session.getAttribute("grpname")%>' > <br>
 						<%@include file="./UserIdName.jsp" %><br>
-						Mobile Number: <input type="text" class="form-control" name="phoneno1" id="phoneno1" placeholder="phone" onblur="return validatePhone();"> <br>
-						Email id:<input type="text" class="form-control" name="emailid1" id="emailid1" placeholder="emailid"  onblur="return validateEmail();"><br>
+						Mobile Number: <input type="text" class="form-control" name="phoneno1" id="phoneno1" placeholder="phone" onblur="return validatePhone1();"> <br>
+						Email id:<input type="text" class="form-control" name="emailid1" id="emailid1" placeholder="emailid"  onblur="return validateEmail1();"><br>
 						<div >
 					    <input type="submit" class="btn btn-lg btn-default btn-block" value="Add Member" />
 					    </div>
