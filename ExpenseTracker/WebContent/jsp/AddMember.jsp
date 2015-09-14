@@ -117,7 +117,8 @@ function validatePhone1() {
 						Mobile Number: <input type="text" class="form-control" name="phoneno1" id="phoneno1" placeholder="phone" onblur="return validatePhone1();"> <br>
 						Email id:<input type="text" class="form-control" name="emailid1" id="emailid1" placeholder="emailid"  onblur="return validateEmail1();"><br>
 						<div >
-					    <input type="submit" class="btn btn-lg btn-default btn-block" value="Add Member" />
+					    <input type="submit" class="btn btn-info" name="add" value="Add Member" />
+					    <input type="submit" class="btn btn-info" name="cancel" value="Cancel" />
 					    </div>
  					   </form>
   </div>

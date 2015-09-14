@@ -242,63 +242,76 @@ public class ManageGroupService {
 		String newgrpname = request.getParameter("addgrpname1");
 		String phone = request.getParameter("phoneno1");
 		String emailid = request.getParameter("emailid1");
-		Connection dbConnection = null;
-		PreparedStatement prepareStmt = null;
-		ResultSet rs = null;
-		String selectsql = null;
-		int usrid = 0;
-		ArrayList<ExpenseGroups> grpList;
+		if (request.getParameter("add") != null) {
+			Connection dbConnection = null;
+			PreparedStatement prepareStmt = null;
+			ResultSet rs = null;
+			String selectsql = null;
+			int usrid = 0;
+			ArrayList<ExpenseGroups> grpList;
 
 
-		try {
-			dbConnection = DatabaseUtils.getInstance().getConnection();
-			if(selectedItem.equalsIgnoreCase("")){
+			try {
+				dbConnection = DatabaseUtils.getInstance().getConnection();
+				if(selectedItem != null){
+					if(selectedItem.equalsIgnoreCase("")){
+						try {
+							response.sendRedirect("Error.jsp");
+							return;
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					if(!selectedItem.equalsIgnoreCase("")){
+						selectsql = "insert into usrgrpmap(grpid,userid) values(?,?);";
+						usrid = Integer.parseInt(selectedItem);
+						int grpid = Integer.parseInt(newgrpname);
+						prepareStmt = dbConnection.prepareStatement(selectsql);
+						prepareStmt.setInt(1, grpid);
+						prepareStmt.setInt(2, usrid);
+						prepareStmt.executeUpdate();
+					}
+				}
+				else if(!phone.equalsIgnoreCase("")){
+					selectsql = "insert into usrgrpmap(grpid,userid) values(?,?);";
+					usrid = getUserIdFromDbPhone(phone); 
+					int grpid = Integer.parseInt(newgrpname);
+					prepareStmt = dbConnection.prepareStatement(selectsql);
+					prepareStmt.setInt(1, grpid);
+					prepareStmt.setInt(2, usrid);
+					prepareStmt.executeUpdate();
+				}
+				else if(!emailid.equalsIgnoreCase("")){
+					selectsql = "insert into usrgrpmap(grpid,userid) values(?,?);";
+					usrid = getUserIdFromDb(emailid);
+					int grpid = Integer.parseInt(newgrpname);
+					prepareStmt = dbConnection.prepareStatement(selectsql);
+					prepareStmt.setInt(1, grpid);
+					prepareStmt.setInt(2, usrid);
+					prepareStmt.executeUpdate();
+				}
+				HttpSession session = request.getSession(true);
+				ExpenseUser user;
+				user = (ExpenseUser) session.getAttribute("user");
+				LoginServlet log = new LoginServlet();
+				grpList = log.getGroupListfromDB(dbConnection,user.getUserId() );   
+				session.setAttribute("grpList", grpList);
 				try {
-					response.sendRedirect("Error.jsp");
-					return;
+					response.sendRedirect("welcome.jsp");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
+					System.out.println(e.getMessage());
+					try {
+						response.sendRedirect("Error.jsp");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					e.printStackTrace();
 				}
-			}
-			
-			if(!selectedItem.equalsIgnoreCase("")){
-				selectsql = "insert into usrgrpmap(grpid,userid) values(?,?);";
-				 usrid = Integer.parseInt(selectedItem);
-				int grpid = Integer.parseInt(newgrpname);
-				prepareStmt = dbConnection.prepareStatement(selectsql);
-				prepareStmt.setInt(1, grpid);
-				prepareStmt.setInt(2, usrid);
-				prepareStmt.executeUpdate();
-			}
-			else if(!phone.equalsIgnoreCase("")){
-				selectsql = "insert into usrgrpmap(grpid,userid) values(?,?);";
-				 usrid = getUserIdFromDbPhone(phone); 
-				int grpid = Integer.parseInt(newgrpname);
-				prepareStmt = dbConnection.prepareStatement(selectsql);
-				prepareStmt.setInt(1, grpid);
-				prepareStmt.setInt(2, usrid);
-				prepareStmt.executeUpdate();
-			}
-			else if(!emailid.equalsIgnoreCase("")){
-				selectsql = "insert into usrgrpmap(grpid,userid) values(?,?);";
-			    usrid = getUserIdFromDb(emailid);
-				int grpid = Integer.parseInt(newgrpname);
-				prepareStmt = dbConnection.prepareStatement(selectsql);
-				prepareStmt.setInt(1, grpid);
-				prepareStmt.setInt(2, usrid);
-				prepareStmt.executeUpdate();
-			}
-			HttpSession session = request.getSession(true);
-			ExpenseUser user;
-			user = (ExpenseUser) session.getAttribute("user");
-			LoginServlet log = new LoginServlet();
-			grpList = log.getGroupListfromDB(dbConnection,user.getUserId() );   
-			session.setAttribute("grpList", grpList);
-			try {
-				response.sendRedirect("welcome.jsp");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
+			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 				try {
 					response.sendRedirect("Error.jsp");
@@ -306,31 +319,30 @@ public class ManageGroupService {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			} finally {
+
+				if (prepareStmt != null) {
+					try {
+						prepareStmt.close();
+						if(dbConnection != null)
+							dbConnection.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+		}
+		else if (request.getParameter("cancel") != null) {
+			try {
+				response.sendRedirect("welcome.jsp");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			try {
-				response.sendRedirect("Error.jsp");
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		} finally {
-
-			if (prepareStmt != null) {
-				try {
-					prepareStmt.close();
-					if(dbConnection != null)
-						dbConnection.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
 		}
+		
 	}
 
 	public void verifyEmail(HttpServletRequest request, HttpServletResponse response) throws IOException{
