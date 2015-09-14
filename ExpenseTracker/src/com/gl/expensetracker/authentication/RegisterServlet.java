@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +35,6 @@ public class RegisterServlet extends HttpServlet {
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    	response.getWriter().append("Welcome to registration");
     	ExpenseUser newUser = new ExpenseUser();
     	newUser.createUserfromRequest(request);
     	try {
@@ -43,6 +43,7 @@ public class RegisterServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}    	
+    	response.sendRedirect("welcome.jsp");
     }
 
 	/**
@@ -58,8 +59,8 @@ public class RegisterServlet extends HttpServlet {
 		Connection dbConnection = null;
 		PreparedStatement prepareStmt = null;
 		String insertTableSQL = "INSERT INTO userdetails "+
-				"(username,emailid,phone,password) VALUES "
-				+ "(?,?,?,?)";
+				"(username,emailid,phone,password,createddate) VALUES "
+				+ "(?,?,?,?,?)";
 
 		try {
 			
@@ -70,12 +71,12 @@ public class RegisterServlet extends HttpServlet {
 			prepareStmt.setString(2, curUser.geteMail());
 			prepareStmt.setString(3, curUser.getMobNumber());
 			prepareStmt.setString(4, curUser.getPassWord());
-			//prepareStmt.setDate(5,  new Date(0));
-
-			// execute insert SQL stetement
+			java.util.Date date = new Date();
+			Object param = new java.sql.Timestamp(date.getTime());
+			prepareStmt.setObject(5, param);
+			
 			prepareStmt.executeUpdate();
-
-			System.out.println("Record is inserted into user table!");
+			System.out.println("Record is inserted into user table!");			
 
 		} catch (SQLException e) {
 

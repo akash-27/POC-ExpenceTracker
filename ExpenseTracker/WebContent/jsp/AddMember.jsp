@@ -103,28 +103,38 @@ function validatePhone1() {
 </head>
 <body> 
 <%@include file="Header.jsp"%>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-6 col-md-4 col-md-offset-4">
-            <div class="account-wall">
-                <div id="my-tab-content1" class="tab-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6 col-md-4 col-md-offset-4">
+				<div class="account-wall">
+					<div id="my-tab-content1" class="tab-content">
 						<div class="tab-pane active" id="addmember1">
-						<H4 align="center"><font color="Green">Add Members to Group</font></H4>
-               		    <img class="img-thumbnail center-block" src="../resources/groups.jpg" alt="">
-						<form class="form-signin" id="addmem1" action="AddMemberDetails" method="post">
-						<input type="hidden" class="form-control" name="addgrpname1" placeholder="Groupname" value='<%=session.getAttribute("grpname")%>' > <br>
-						<%@include file="./UserIdName.jsp" %><br>
-						Mobile Number: <input type="text" class="form-control" name="phoneno1" id="phoneno1" placeholder="phone" onblur="return validatePhone1();"> <br>
-						Email id:<input type="text" class="form-control" name="emailid1" id="emailid1" placeholder="emailid"  onblur="return validateEmail1();"><br>
-						<div >
-					    <input type="submit" class="btn btn-lg btn-default btn-block" value="Add Member" />
-					    </div>
- 					   </form>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
+							<H4 align="center">
+								<font color="Green">Add Members to Group</font>
+							</H4>
+							<img class="img-thumbnail center-block"
+								src="../resources/groups.jpg" alt="">
+							<form class="form-signin" id="addmem1" action="AddMemberDetails"
+								method="post">
+								<input type="hidden" class="form-control" name="addgrpname1"
+									placeholder="Groupname"
+									value='<%=session.getAttribute("grpname")%>'> <br>
+								<%@include file="./UserIdName.jsp"%><br>
+								Mobile Number: <input type="text" class="form-control"
+									name="phoneno1" id="phoneno1" placeholder="phone"
+									onblur="return validatePhone1();"> <br> Email id:<input
+									type="text" class="form-control" name="emailid1" id="emailid1"
+									placeholder="emailid" onblur="return validateEmail1();"><br>
+								<div>
+									<input type="submit" class="btn btn-lg btn-default btn-block"
+										value="Add Member" />
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

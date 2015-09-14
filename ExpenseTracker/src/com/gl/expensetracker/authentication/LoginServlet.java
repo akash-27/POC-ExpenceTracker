@@ -109,8 +109,7 @@ private static final long serialVersionUID = 1L;
     {
     	ArrayList<ExpenseGroups> grpList = new ArrayList<>();
     	
-    //	String searchQuery ="select grpid from usrgrpmap where userid=?";
-    	String searchQuery ="select * from groupdetails where createdby=?";
+    	String searchQuery ="select * from usrgrpmap where userid=?";
     	PreparedStatement prepareStmt = null;
     	prepareStmt = con.prepareStatement(searchQuery);
 
@@ -143,10 +142,6 @@ private static final long serialVersionUID = 1L;
 			//TODO : handling of created date
 //			try {
 //				grpDetail.setCreatedDate(new SimpleDateFormat().parse(rs.getString("createddate")));
-//			} catch (ParseException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 
 		}
     	return grpDetail;
