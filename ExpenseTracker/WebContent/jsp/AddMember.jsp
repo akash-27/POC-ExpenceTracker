@@ -114,7 +114,7 @@ function validatePhone1() {
 						<form class="form-signin" id="addmem1" action="AddMemberDetails" method="post">
 						<input type="hidden" class="form-control" name="addgrpname1" placeholder="Groupname" value='<%=session.getAttribute("grpname")%>' > <br>
 						<%@include file="./UserIdName.jsp" %><br>
-						Mobile Number: <input type="text" class="form-control" name="phoneno1" id="phoneno1" placeholder="phone" onblur="return validatePhone1();"> <br>
+						Mobile Number: <input type="text" class="form-control" name="phoneno1" id="phoneno1" placeholder="phone" size="10" onblur="return validatePhone1();"> <br>
 						Email id:<input type="text" class="form-control" name="emailid1" id="emailid1" placeholder="emailid"  onblur="return validateEmail1();"><br>
 						<div >
 					    <input type="submit" class="btn btn-info" name="add" value="Add Member" />

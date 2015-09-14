@@ -22,14 +22,17 @@ import com.gl.expensetracker.connection.DatabaseUtils;
 
 public class ManageGroupService {
 
+	@SuppressWarnings("unchecked")
 	public void insertGroupDetails(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 
 		String grpname = request.getParameter("grp");
 		Connection dbConnection = null;
-		PreparedStatement prepareStmt = null; 
+		PreparedStatement prepareStmt = null;
+		PreparedStatement prepareStmt2 = null; 
 		PreparedStatement prepareStmt1 = null;
 		ExpenseUser user;
 		int grpid = 0;
+		ExpenseGroups grp  = new ExpenseGroups();
 		ArrayList<ExpenseGroups> grpList;
 		LoginServlet logser = new LoginServlet();
 		String insertsql = "insert into groupdetails (grpname,createdby,createddate) values (?,?,?)";
@@ -50,21 +53,26 @@ public class ManageGroupService {
 			prepareStmt.setInt(2, user.getUserId());
 			// execute update SQL stetement
 			prepareStmt.executeUpdate();
-
-			grpList = logser.getGroupListfromDB(dbConnection, user.getUserId());
-			for (ExpenseGroups grp: grpList) {
-				if(grp.getGrpName().equals(grpname)){
-					grpid = grp.getGrpId();
-				}
+			String searchQuery ="select grpid from groupdetails where grpname=?";
+			prepareStmt2 = dbConnection.prepareStatement(searchQuery);
+			prepareStmt2.setString(1, grpname);
+			ResultSet rs1 = prepareStmt2.executeQuery();
+			while(rs1.next()){
+				grpid = rs1.getInt("grpid");
 			}
 			prepareStmt1 = dbConnection.prepareStatement(grpmapsql);
 			prepareStmt1.setInt(1, grpid);
 			prepareStmt1.setInt(2, user.getUserId());
 			prepareStmt1.executeUpdate();
-
+			dbConnection.commit();
+			grp.setCreatedBy(user.getUserName());
+			grp.setGrpId(grpid);
+			grp.setGrpName(grpname);
+			grp.setNumber(0);
+			grpList = (ArrayList<ExpenseGroups>) session.getAttribute("grpList");
+			grpList.add(grp);
 			session.setAttribute("grpList", grpList);
 			response.sendRedirect("welcome.jsp");
-			dbConnection.commit();
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
