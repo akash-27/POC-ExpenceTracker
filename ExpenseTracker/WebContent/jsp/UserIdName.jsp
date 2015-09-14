@@ -80,8 +80,8 @@ class
 	User Number:
 	<select class="form-control" style="" name="usrname1" id="usrname1"
 		style="width:200px" onblur="checkname()">
-		 <option> 
-    	</option> 
+<!-- 		 <option>  -->
+<!--     	</option>  -->
 		<c:forEach var="item" items="${sessionScope.usrList}">
 			<option value="${item.userId}" >${item.userName}</option>
 		</c:forEach>
