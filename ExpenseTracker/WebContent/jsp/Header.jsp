@@ -139,6 +139,24 @@
 		});
 		return false;
 	}
+	
+	
+	function checkGroupName() {
+		var name1 = document.getElementById("grp").value;
+		$.get("GroupNameValidation", {
+			"grp" : name1
+		}, function(resultFromServer) {
+
+			if (resultFromServer == "true") {
+				$("#grpButton").hide();
+				$(".largefont").text("user name already exists ");
+			} else {
+				$("#grpButton").show();
+				$(".largefont").text(" ");
+			}
+		});
+	}
+	
 </script>
 
 <style type="text/css">
@@ -201,8 +219,9 @@ class
 							<li><a href="#" data-toggle="modal" data-target="#delete">Delete
 									Group</a></li>
 						</ul></li>
+				</ul>
 
-					<ul class="nav navbar-nav">
+				<ul class="nav navbar-nav">
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown" role="button" aria-expanded="false">Edit
 								User Profile <span class="caret"></span>
@@ -230,10 +249,8 @@ class
 						</div>
 						<div class="modal-body">
 							<form class="form-manage" action="CreateGroup" method="post">
-								Group Name: <input type="text" class="form-control" placeholder="Groupname" id="grp" name="grp" required autofocus> 
-<!-- 								Created By:	<input type="text" -->
-<!-- 									class="form-control" name="usr" placeholder="Createdby" required> -->
-								<input type="submit" class="btn btn-lg btn-default btn-block" value="Create" onclick="return checkLength()"/>
+								Group Name: <input type="text" class="form-control" placeholder="Groupname" id="grp" name="grp" onkeypress="checkGroupName();"required autofocus> 
+								<input type="submit" class="btn btn-lg btn-default btn-block" id="grpButton" value="Create" onclick="return checkLength()"/>
 							</form>
 						</div>
 						<div class="modal-footer">

@@ -5,9 +5,9 @@ import java.util.Date;
 public class ExpenseGroups {
 	
 	private int grpId;
-	private String grpName, createdBy;
+	private String grpName;
 	private Date createdDate;
-	private int number;
+	private int number, createdBy;
 	
 	public int getGrpId() {
 		return grpId;
@@ -21,10 +21,10 @@ public class ExpenseGroups {
 	public void setGrpName(String grpName) {
 		this.grpName = grpName;
 	}
-	public String getCreatedBy() {
+	public int getCreatedBy() {
 		return createdBy;
 	}
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
 	}
 	public Date getCreatedDate() {

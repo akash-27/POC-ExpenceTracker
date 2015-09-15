@@ -65,7 +65,7 @@ public class ManageGroupService {
 			prepareStmt1.setInt(2, user.getUserId());
 			prepareStmt1.executeUpdate();
 			dbConnection.commit();
-			grp.setCreatedBy(user.getUserName());
+			grp.setCreatedBy(user.getUserId());
 			grp.setGrpId(grpid);
 			grp.setGrpName(grpname);
 			grp.setNumber(0);

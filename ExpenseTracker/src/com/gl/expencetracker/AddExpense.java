@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -78,8 +79,9 @@ public class AddExpense extends HttpServlet {
 			prepareStmt.setInt(2, curGroup.getGrpId());
 			prepareStmt.setInt(3, curUser.getUserId());
 			prepareStmt.setInt(4, (int)expenseEntity.getAmount());
-			//TODO Need to change date handling
-			prepareStmt.setDate(5, java.sql.Date.valueOf("2000-11-01"));
+			java.util.Date date = new Date();
+			Object param = new java.sql.Timestamp(date.getTime());
+			prepareStmt.setObject(5, param);
 			
 			// execute insert SQL statement
 			rc = prepareStmt.executeUpdate();
