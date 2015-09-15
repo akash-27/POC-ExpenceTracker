@@ -65,6 +65,7 @@ private static final long serialVersionUID = 1L;
     			user.setUserId(rs.getInt("userid"));
     			user.setAddress(rs.getString("address"));
     			user.setIsValidated(rs.getBoolean("isvalidated"));
+    			//TODO - date handling
 //    			user.setCreatedOn(rs.getDate("createdon"));
     			
     			//setting user-details in session

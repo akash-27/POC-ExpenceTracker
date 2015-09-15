@@ -2,20 +2,12 @@ package com.gl.expensetracker.usrprof;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.gl.expensetracker.connection.DatabaseUtils;
-import com.gl.expensetracker.object.ExpenseUser;
-import com.gl.expenetracker.service.managegroup.ManageGroupService;
 import com.gl.expensetracker.service.manageprofile.ManageProfileService;
-
-import java.sql.*;
 
 /**
  * Servlet implementation class ChangePassword

@@ -35,7 +35,7 @@
 	<div style="width: 100%;">
 		<!-- Main Div -->
 		<h4>!!!Add your expenses and share your
-			wallet!!hjagfhagkfgahkgvkgashgfhsdghkghgfsdhksdfhghksdfh!</h4>
+			wallet!!!</h4>
 		<div style="float: left; width: 48%;">
 			<h2>
 				Expenses for

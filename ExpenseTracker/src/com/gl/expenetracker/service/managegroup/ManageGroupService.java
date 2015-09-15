@@ -34,7 +34,6 @@ public class ManageGroupService {
 		int grpid = 0;
 		ExpenseGroups grp  = new ExpenseGroups();
 		ArrayList<ExpenseGroups> grpList;
-		LoginServlet logser = new LoginServlet();
 		String insertsql = "insert into groupdetails (grpname,createdby,createddate) values (?,?,?)";
 		String grpmapsql = "insert into usrgrpmap (grpid,userid) values(?,?)";
 
@@ -63,13 +62,18 @@ public class ManageGroupService {
 			prepareStmt1 = dbConnection.prepareStatement(grpmapsql);
 			prepareStmt1.setInt(1, grpid);
 			prepareStmt1.setInt(2, user.getUserId());
+			System.out.println(prepareStmt1);
 			prepareStmt1.executeUpdate();
 			dbConnection.commit();
 			grp.setCreatedBy(user.getUserId());
 			grp.setGrpId(grpid);
 			grp.setGrpName(grpname);
-			grp.setNumber(0);
+			grp.setNumber(1);
 			grpList = (ArrayList<ExpenseGroups>) session.getAttribute("grpList");
+			if(grpList == null)
+			{
+				grpList = new ArrayList<ExpenseGroups>();
+			}
 			grpList.add(grp);
 			session.setAttribute("grpList", grpList);
 			response.sendRedirect("welcome.jsp");
@@ -147,6 +151,7 @@ public class ManageGroupService {
 				grpusr.setCreatedBy(grp.getCreatedBy());
 				grpusr.setCreatedDate(grp.getCreatedDate());
 				grpusr.setGrpId(grp.getGrpId());
+				grpusr.setNumber(grp.getNumber());
 				grpList1.add(grpusr);
 			} 
 			session.setAttribute("grpList", grpList1);
@@ -253,7 +258,6 @@ public class ManageGroupService {
 		if (request.getParameter("add") != null) {
 			Connection dbConnection = null;
 			PreparedStatement prepareStmt = null;
-			ResultSet rs = null;
 			String selectsql = null;
 			int usrid = 0;
 			ArrayList<ExpenseGroups> grpList;

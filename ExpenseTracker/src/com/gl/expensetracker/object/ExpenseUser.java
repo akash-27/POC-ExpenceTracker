@@ -37,6 +37,7 @@ public class ExpenseUser {
 		this.mobNumber = request.getParameter("mobno");
 		this.createdOn = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 		this.isValidated = false;
+		this.address = " ";
 	}
 	
 	public void extractUserIdfromRequest(HttpServletRequest request)

@@ -16,9 +16,7 @@ import com.gl.expensetracker.connection.DatabaseUtils;
 public class ManageProfileService {
 
 	public void ChangePassword(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		String oldpass = request.getParameter("oldpass");
 		String newpass = request.getParameter("newpass");
-		String confpass = request.getParameter("confpass");
 
 
 		Connection dbConnection = null;
@@ -62,7 +60,6 @@ public class ManageProfileService {
 	}
 	
 	public void EditProfile(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		String username = request.getParameter("username");
 		String phone = request.getParameter("phone");
 		String address = request.getParameter("address");
 		String email = request.getParameter("email");
@@ -106,7 +103,6 @@ public class ManageProfileService {
 					e.printStackTrace();
 				}
 			}
-
 		}
 	}
 }

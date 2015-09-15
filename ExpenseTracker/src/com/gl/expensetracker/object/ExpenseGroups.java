@@ -33,12 +33,7 @@ public class ExpenseGroups {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	@Override
-	public String toString() {
-		return "ExpenseGroups [grpId=" + grpId + ", grpName=" + grpName
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
-				+ "]";
-	}
+	
 	public int getNumber() {
 		return number;
 	}
