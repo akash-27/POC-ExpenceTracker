@@ -40,9 +40,10 @@
 		<div class="carousel slide" id="myCarousel">
 			<div class="carousel-inner">
 				<div class="item active">
-					<form action="AddMember" method="post">
+					
 						<ul class="thumbnails" style="list-style-type: none">
 							<c:forEach var="item" items="${sessionScope.grpList}">
+							<form action="AddMember" method="post">
 								<li class="col-sm-3">
 									<div class="fff">
 										<div class="thumbnail">
@@ -75,9 +76,10 @@
 										</div>
 									</div>
 								</li>
+								</form>
 							</c:forEach>
 						</ul>
-					</form>
+					
 				</div>
 			</div>
 		</div>
