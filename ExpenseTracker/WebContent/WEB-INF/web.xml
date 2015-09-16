@@ -21,4 +21,8 @@
   <listener>
     <listener-class>com.gl.expensetracker.connection.BootLoader</listener-class>
   </listener>
+  <listener>
+  <listener-class>com.gl.scheduler.QuartzListener</listener-class> 
+  </listener>
+  
 </web-app>
