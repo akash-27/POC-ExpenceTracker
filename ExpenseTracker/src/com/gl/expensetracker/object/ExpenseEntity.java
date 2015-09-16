@@ -8,6 +8,7 @@ public class ExpenseEntity {
 	private int grpId, expenseId, userId;
 	private float amount;
 	private String createdDate;
+	private boolean isProcessed;
 	
 	public String getExpenseName() {
 		return expenseName;
@@ -55,6 +56,12 @@ public class ExpenseEntity {
 	public String toString() {
 		return "ExpenseEntity [expenseName=" + expenseName + " - "
 				+ amount ;
+	}
+	public boolean isProcessed() {
+		return isProcessed;
+	}
+	public void setProcessed(boolean isProcessed) {
+		this.isProcessed = isProcessed;
 	}	
 	
 }
