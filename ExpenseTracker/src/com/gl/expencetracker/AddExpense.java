@@ -69,8 +69,8 @@ public class AddExpense extends HttpServlet {
 		ExpenseGroups curGroup = (ExpenseGroups) session.getAttribute("curgroup"); 
 		ExpenseUser curUser = (ExpenseUser) session.getAttribute("user");
 		String insertTableSQL = "INSERT INTO expensedetails "+
-				"(expensename,grpid,userid,amount,createddate) VALUES "
-				+ "(?,?,?,?,?)";
+				"(expensename,grpid,userid,amount,createddate,isprocessed) VALUES "
+				+ "(?,?,?,?,?,?)";
 
 		try {
 			dbConnection = DatabaseUtils.getInstance().getConnection();
@@ -82,6 +82,7 @@ public class AddExpense extends HttpServlet {
 			java.util.Date date = new Date();
 			Object param = new java.sql.Timestamp(date.getTime());
 			prepareStmt.setObject(5, param);
+			prepareStmt.setBoolean(6, false);
 			
 			// execute insert SQL statement
 			rc = prepareStmt.executeUpdate();

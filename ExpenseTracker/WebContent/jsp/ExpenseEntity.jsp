@@ -64,7 +64,7 @@
 					method="post">
 					Commodity Name:<input type="text" name="expensename"
 						class="form-control" placeholder="Expense entity ..."
-						required="required" autofocus> Amount:<input type="number"
+						required="required" autofocus> Amount(&#8377;):<input type="number"
 						id="price" name="price" class="form-control"
 						placeholder="Price of entity ..." required> <input
 						type="submit" class="btn btn-lg btn-default btn-block" value="ADD" />

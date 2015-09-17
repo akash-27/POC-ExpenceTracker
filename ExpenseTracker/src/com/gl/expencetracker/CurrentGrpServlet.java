@@ -87,6 +87,7 @@ public class CurrentGrpServlet extends HttpServlet {
 			expenseEntity.setGrpId(rs.getInt("grpid"));
 			expenseEntity.setUserId(rs.getInt("userid"));
 			expenseEntity.setAmount(rs.getFloat("amount"));
+			expenseEntity.setProcessed(rs.getBoolean("isprocessed"));
 			
 			// TODO date handling			
 			//expenseEntity.setCreatedDate(rs.getDate("createddate"));
