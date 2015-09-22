@@ -57,7 +57,7 @@ public class ExpenseEntity {
 		return "ExpenseEntity [expenseName=" + expenseName + " - "
 				+ amount ;
 	}
-	public boolean isProcessed() {
+	public boolean getIsProcessed() {
 		return isProcessed;
 	}
 	public void setProcessed(boolean isProcessed) {

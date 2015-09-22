@@ -32,25 +32,50 @@
 		curGroup = (ExpenseGroups) session.getAttribute("curgroup");
 	%>
 
-	<div style="width: 100%;">
+	<div  style="width:100%; border:2px solid #ccc;">
 		<!-- Main Div -->
-		<h4>!!!Add your expenses and share your
-			wallet!!!</h4>
-		<div style="float: left; width: 48%;">
+		<div class="fff">
+			<div  align="center" class="thumbnail">
+				<h3><font color="Magenta"> The Group members are :</font></h3>
+				<h4>
+					<font color="Orange"> <c:forEach var="item"
+							items="${sessionScope.grpMemberlist}">
+					${item} &nbsp; &nbsp; &nbsp;  
+				</c:forEach>
+					</font>
+				</h4>
+			</div>
+		</div>
+		<h4>
+		<font color="Brown">!!!Add your expenses and share your wallet!!!</font></h4>
+
+		<div style="float: left; width: 25%;">
 			<h2>
+			<font color="Blue">
 				Expenses for
 				<%=curGroup.getGrpName()%>
 				:
+				</font>
 			</h2>
 
 			<c:forEach var="item" items="${sessionScope.expenselist}">
 				<div class="fff">
 					<div class="thumbnail">
+						<h6 style="float: right">
+							<font color="Blue">Dated: ${item.createdDate}</font>
+						</h6>
+						<h4>
+							<font color="Brown">Item: ${item.expenseName}</font>
+						</h4>
 
-						<div class="caption">
-							<h4 id="spend">${item.expenseName}</h4>
-							<p>${item.amount}${item.createdDate}</p>
-						</div>
+						<c:if test="${item.isProcessed}">
+							<h5 style="float: right">
+								<font color="Red"> PROCESSED</font>
+							</h5>
+						</c:if>
+						<h6>
+							<font color="Green">Price: ${item.amount}</font>
+						</h6>
 					</div>
 				</div>
 			</c:forEach>
@@ -64,8 +89,8 @@
 					method="post">
 					Commodity Name:<input type="text" name="expensename"
 						class="form-control" placeholder="Expense entity ..."
-						required="required" autofocus> Amount(&#8377;):<input type="number"
-						id="price" name="price" class="form-control"
+						required="required" autofocus> Amount(&#8377;):<input
+						type="number" id="price" name="price" class="form-control"
 						placeholder="Price of entity ..." required> <input
 						type="submit" class="btn btn-lg btn-default btn-block" value="ADD" />
 				</form>

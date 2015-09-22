@@ -46,6 +46,7 @@ public class CurrentGrpServlet extends HttpServlet {
 		Connection dbConnection = null;
 		
 		ArrayList<ExpenseEntity> expenseList = null;
+		ArrayList<String> grpMemberlist = null;
 		
 
 		dbConnection = DatabaseUtils.getInstance().getConnection();
@@ -54,12 +55,14 @@ public class CurrentGrpServlet extends HttpServlet {
 
 			session.setAttribute("curgroup", curGroup);
 			expenseList = getGroupListfromDB(dbConnection, curGroup.getGrpId()); 
+			grpMemberlist = getGroupMembersforGroup(dbConnection, grpId);
 			dbConnection.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		session.setAttribute("expenselist", expenseList);
+		session.setAttribute("grpMemberlist", grpMemberlist);
 		response.sendRedirect("ExpenseEntity.jsp");	
 	}
 	/**
@@ -73,7 +76,7 @@ public class CurrentGrpServlet extends HttpServlet {
 	private ArrayList<ExpenseEntity> getGroupListfromDB(Connection dbConnection, int grpId) throws SQLException {
 		
 		ArrayList<ExpenseEntity> expenseList = new ArrayList<>();
-		String searchQuery ="select * from expensedetails where grpid=?";
+ 		String searchQuery ="select * from expensedetails where grpid=?";
     	PreparedStatement prepareStmt = null;
     	prepareStmt = dbConnection.prepareStatement(searchQuery);
 		prepareStmt.setInt(1, grpId);
@@ -90,10 +93,45 @@ public class CurrentGrpServlet extends HttpServlet {
 			expenseEntity.setProcessed(rs.getBoolean("isprocessed"));
 			
 			// TODO date handling			
-			//expenseEntity.setCreatedDate(rs.getDate("createddate"));
-			
+			expenseEntity.setCreatedDate(rs.getString("createddate"));
 			expenseList.add(expenseEntity);			
 		}		
 		return expenseList;
+	}
+	
+	private ArrayList<String> getGroupMembersforGroup(Connection dbConnection,int grpId) throws SQLException
+	{
+		ArrayList<String> grpMembers = new ArrayList<>();
+		int usrId;
+		String searchQuery ="select * from usrgrpmap where grpid=?";
+		PreparedStatement prepareStmt = null;
+		prepareStmt = dbConnection.prepareStatement(searchQuery);
+		prepareStmt.setInt(1, grpId);
+		ResultSet rs = prepareStmt.executeQuery();
+
+		while( rs.next()) {
+
+			String grpMember;
+			usrId = rs.getInt("userid");
+			grpMember = getGroupMemberfromDB(dbConnection,usrId);			
+			grpMembers.add(grpMember);    		
+		}    	
+		return grpMembers;
+
+	}
+
+	private String getGroupMemberfromDB(Connection dbConnection, int usrId) throws SQLException {
+
+		String name = null;
+		String searchQuery ="select * from userdetails where userid=?";
+		PreparedStatement prepareStmt = null;
+		prepareStmt = dbConnection.prepareStatement(searchQuery);
+		prepareStmt.setInt(1, usrId);
+		ResultSet rs = prepareStmt.executeQuery();
+
+		while( rs.next()) {
+			name = rs.getString("username");			
+		}		
+		return name;
 	}
 }
