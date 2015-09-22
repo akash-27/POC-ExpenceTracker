@@ -15,8 +15,8 @@ import javax.mail.internet.MimeMessage;
 public class SendMail {
 
 	private  final String HOST_NAME = "smtp.gmail.com";
-	private final String USER_MAIL_ID ="noreplyatsharebazar";  // username
-	private final  String AUTH_PWD = "sharebazar@123";    // passwd
+	private final String USER_MAIL_ID ="noreplyatexpensetracker";  // noreplyatexpensetracker username
+	private final  String AUTH_PWD = "expense@123#";    // passwd
 	public  boolean  sendMessageToMail(String mailid,String subject , String msg)	{
 
 		try {
@@ -50,7 +50,7 @@ public class SendMail {
 
 
 			Transport transport = session.getTransport("smtps");
-			transport.connect(HOST_NAME, "noreplyatsharebazar", "sharebazar@123");
+			transport.connect(HOST_NAME, "noreplyatexpensetracker", "expense@123#");
 			transport.sendMessage(message, message.getAllRecipients());
 			
 			transport.close();
