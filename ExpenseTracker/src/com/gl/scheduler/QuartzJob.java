@@ -77,11 +77,12 @@ public class QuartzJob implements Job  {
     				count=count+1;
     				userid=rs1.getInt(1);
     				
-    				prepareStmt = con.prepareStatement("select amount, expensename ,createddate from expensedetails where grpid='"+groupid+"' and userid='"+userid+"'");
+    				prepareStmt = con.prepareStatement("select amount , expensename ,createddate ,expenseid from expensedetails where grpid='"+groupid+"' and isprocessed='0' and userid='"+userid+"'");
     				rs2=(ResultSet) prepareStmt.executeQuery();
     				while(rs2.next()){
-    					
-    					
+    					String expenseid =rs2.getString(4);
+    					prepareStmt = con.prepareStatement("update expensedetails set isprocessed='1' where expenseid='"+expenseid+"'");
+    					prepareStmt.executeUpdate();  
     	    			mesg += hm2.get(userid)+"  Brought  "+rs2.getString(2)+" FOR AMOUNT  "+rs2.getInt(1)+" DATED "+rs2.getString(3)+"<br>";
     					sum=sum+rs2.getInt(1);
     					
